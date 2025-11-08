@@ -1,0 +1,60 @@
+#clock-header {
+    /* background:rgb(237, 123, 74); */
+    box-shadow: 1px 1px 1px 3px rgb(88, 88, 87);
+    padding: 10px 25px 10px 25px;
+    border-radius: 2px;
+    color: black;
+}
+#clock-header-qc1 {
+    /* background: yellow; */
+    box-shadow: 1px 1px 1px 3px rgb(88, 88, 87);
+    padding: 10px 25px 10px 25px;
+    border-radius: 2px;
+}
+#sidebar-product{
+    background: rgb(249, 246, 246);
+}
+#sidebar-qc{
+    background: rgb(249, 246, 246);
+}
+.btn-close-large {
+    background-color: rgb(251, 4, 4);
+    width: 40px; /* ปรับขนาดปุ่มตามที่คุณต้องการ */
+    height: 40px;
+    background-size: 25px; /* ปรับขนาดของไอคอน 'X' ภายในปุ่ม */
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+}
+
+.modal-color{
+    background-color: rgb(211, 214, 214);
+}
+
+/* #setting-navbar-p{
+    box-shadow: 1px 1px 2px 3px rgb(88, 88, 87);
+}
+#login-navbar-p{
+    box-shadow: 1px 1px 2px 3px rgb(88, 88, 87);
+} */
+
+/* สร้างคลาสใหม่สำหรับโมดัลขนาดใหญ่ขึ้น */
+.modal-dialog-custom-xl {
+    max-width: 70% !important;  /* หรือกำหนด %/px ตามต้องการ */
+    /* หากต้องการปรับความสูง หรืออื่นๆ ก็เพิ่มได้ */
+  }
+  .modal-dialog-custom-xll {
+    max-width: 95%;
+    width: auto;
+  }
+  .modal-dialog-custom-xlll {
+    max-width: 65%;
+    width: auto;
+  }
+  .modal-dialog-custom-xlAF {
+    max-width: 65%;
+    width: auto;
+  }
+  .btn-close{
+    width: 35px;
+    height: 35px;
+    background-color: red;
+  }

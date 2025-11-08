@@ -1,0 +1,37 @@
+/* ทำให้แถว tool-number มีขอบแบ่งแต่ละ cell */
+.tool-grid .tool-cell {
+  border-right: 1px solid #dee2e6;   /* เส้นแบ่งแนวตั้ง */
+  border-bottom: 1px solid #dee2e6;  /* เส้นแบ่งแนวนอน */
+  background: #fff;
+}
+
+/* ตัดเส้นขอบขวาที่คอลัมน์สุดท้ายของแต่ละแถว (12 คอลัมน์ต่อแถว เมื่อใช้ col-1) */
+.tool-grid .tool-col:nth-child(12n) .tool-cell {
+  border-right: none;
+}
+
+/* เสริมความสวยงามเวลา hover (ถ้าต้องการ) */
+.tool-grid .tool-cell:hover {
+  background: #f8f9fa;
+}
+
+/* ให้ label ชิดขอบสวยขึ้นบนจอแคบ */
+@media (max-width: 768px) {
+  .tool-grid .tool-col {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+  .tool-grid .tool-col:nth-child(5n) .tool-cell {
+    border-right: none; /* เมื่อ 1 แถวมี 5 คอลัมน์ในจอเล็ก */
+  }
+}
+
+.blink-text {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

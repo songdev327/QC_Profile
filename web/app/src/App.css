@@ -1,0 +1,673 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+#record-change-tool{
+  background: rgb(252, 109, 240);
+}
+#record-change-tool-new{
+  background: rgb(79, 88, 247);
+  color: white;
+}
+#record-change-tool-shaft{
+  background: rgb(191, 189, 191);
+  box-shadow: 1px 1px 3px 3px rgb(109, 109, 109) ;
+}
+#record-change-tool-h1{
+  height: 85px;
+  padding: 20px 0px 20px 0px;
+  margin-bottom: 25px;
+  background: rgb(252, 109, 240);
+  text-align: center;
+  align-items: center;
+}
+.h1-font{
+  font-weight: 900;
+}
+#tool-production-list-p{
+  background: rgb(252, 109, 240);
+  width: 100%;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  box-shadow: 2px 1px 1px 3px rgb(83, 82, 82) ;
+}
+#tool-number{
+background: rgb(252, 109, 240);
+width: 50%;
+text-align: center;
+padding: 5px 10px 5px 10px;
+border-radius: 5px;
+box-shadow: 2px 1px 1px 1px;
+}
+#box-product{
+  background: rgb(252, 109, 240);
+}
+#box{
+ background: rgb(173, 174, 174);
+ padding: 3px 3px 3px 3px;
+ border-radius: 1px;
+}
+#box-1{
+  background-color: rgb(244, 244, 136);
+  padding: 3px 3px 3px 3px;
+  border-radius: 2px;
+}
+#box-22{
+  background-color: rgb(197, 197, 197);
+  padding: 3px 3px 3px 3px;
+  border-radius: 2px;
+}
+#tool-production-list{
+  background: rgb(252, 109, 240);
+  width: 100%;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  box-shadow: 2px 1px 1px 3px rgb(83, 82, 82) ;
+}
+#tool-qc-confirm{
+  width: 80%;
+  text-align: center;
+  background-color: yellow;
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  box-shadow: 2px 1px 1px 3px rgb(83, 82, 82) ;
+}
+#add-profile{
+  background-color: rgb(50, 60, 239);
+  color: white;
+}
+#add-profile-qc{
+  background-color:yellow;
+}
+#iconM{
+  font-size: 2rem
+}
+#icon-search{
+  font-size: 1.5rem
+}
+#icon-search-register{
+  font-size: 1.8rem;
+}
+
+/* #icon-search {
+  transition: transform 0.3s ease;
+}
+
+
+#icon-search:hover {
+  transform: translateX(10px); 
+} */
+
+#bodyRoncom{
+  border-radius: 5px;
+  box-shadow: 1px 3px 5px 5px rgb(109, 108, 108) ;
+}
+#record-change-tool-1{
+  border-radius: 5px;
+  box-shadow: 2px 3px 5px 5px rgb(109, 108, 108) ;
+}
+#record-change-tool-2{
+  background-color: rgb(187, 182, 187);
+}
+#modalProductImage{
+  box-shadow: 2px 3px 5px 5px rgb(109, 108, 108) ; 
+}
+#mesering{
+  /* background-color: rgb(236, 236, 239); */
+  border: solid rgb(8, 8, 247);
+  color: black;
+}
+#mesering-1{
+  /* background-color: rgb(236, 236, 239); */
+  /* border: solid rgb(84, 84, 86); */
+  color: rgb(252, 249, 249);
+}
+#result-mesering{
+  background-color: yellow;
+  padding: 5px 20px 5px 20px;
+  border-radius: 5px;
+  /* box-shadow: 2px 1px 1px 3px rgb(83, 82, 82) ; */
+}
+.eqm{
+  width: 100%;
+}
+.eqm1{
+  width: 100%;
+}
+#table-setter{
+  background-color: rgb(187, 182, 187);
+}
+#login{
+background-color: rgb(167, 233, 241);
+}
+#type_mc{
+background-color: rgb(167, 233, 241);
+color: rgb(167, 233, 241);
+border: rgb(167, 233, 241);
+}
+#login-setting{
+  background-color: rgb(167, 233, 241);
+}
+#login-setting-qc{
+  background-color: rgb(247, 249, 117);
+}
+#afterset-change-tool{
+ border: solid rgb(228, 216, 216);
+ border-radius: 5px;
+ padding: 0.8rem 0.8rem 0.8rem 0.8rem;
+}
+#box-show-af{
+ background-color: #699eed;
+}
+#tool-setter-confirm{
+  background-color: rgb(159, 243, 243);
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  box-shadow: 1px 0px 3px rgb(83, 82, 82) ;
+}
+#tool-setter-confirm1{
+  background-color: rgb(159, 243, 243);
+  padding: 5px 5px 5px 5px;
+  /* border-radius: 5px; */
+  /* box-shadow: 1px 0px 3px rgb(83, 82, 82) ; */
+}
+#table-product-number{
+  background-color: rgb(248, 244, 245);
+}
+#qc-inprocess-confirm{
+  background-color: rgb(242, 239, 75);
+}
+#add-part-set-up{
+  background-color: #f963f9;
+  padding: 5px;
+}
+#confirmQCbyoff {
+  background-color: rgb(242, 239, 75);
+  box-shadow: 0.1px 0.1px 0.5px 0.5px;
+  color: rgb(10, 10, 10); /* สีพื้นฐานของข้อความในปุ่ม */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer; /* เปลี่ยน cursor เป็น pointer */
+  transition: transform 0.05s ease-in-out 0.05s, box-shadow 0.05s ease-in-out 0.05s; /* เพิ่มการเปลี่ยนแปลงที่นุ่มนวลพร้อมหน่วงเวลา */
+}
+#confirmQCbyoff:hover {
+  background-color: rgb(242, 239, 75);
+  color:rgb(10, 10, 10); /* เปลี่ยนสีข้อความเมื่อ hover */
+  font-weight: 900;
+  transform: translateY(-3px); /* ยกปุ่มขึ้น */
+  box-shadow: 1px 1px 3px 3px;
+}
+#confirmQCProjector {
+  background-color: rgb(8, 99, 247);
+  box-shadow: 0.1px 0.1px 0.5px 0.5px;
+  color: rgb(251, 248, 248); /* สีพื้นฐานของข้อความในปุ่ม */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer; /* เปลี่ยน cursor เป็น pointer */
+  transition: transform 0.05s ease-in-out 0.05s, box-shadow 0.05s ease-in-out 0.05s; /* เพิ่มการเปลี่ยนแปลงที่นุ่มนวลพร้อมหน่วงเวลา */
+}
+#confirmQCProjector:hover {
+  background-color: rgb(3, 33, 186);
+  color:rgb(254, 253, 253); /* เปลี่ยนสีข้อความเมื่อ hover */
+  font-weight: 900;
+  transform: translateY(-3px); /* ยกปุ่มขึ้น */
+  box-shadow: 1px 1px 3px 3px;
+}
+#toolNumber-auto {
+  background-color: #f963f9;
+  border: none;
+  border-radius: 5px;
+  padding: 0.6rem 3.1rem 0.6rem 3.1rem;
+  box-shadow: 0.1px 0.1px 0.5px 0.5px;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+#toolNumber-auto:hover {
+  font-weight: 600;
+  transform: translateY(-1px); 
+}
+#addPartSetUp {
+  background-color: rgb(8, 99, 247);
+  box-shadow: 0.1px 0.1px 0.5px 0.5px;
+  color: rgb(251, 248, 248); /* สีพื้นฐานของข้อความในปุ่ม */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer; /* เปลี่ยน cursor เป็น pointer */
+  transition: transform 0.05s ease-in-out 0.05s, box-shadow 0.05s ease-in-out 0.05s; /* เพิ่มการเปลี่ยนแปลงที่นุ่มนวลพร้อมหน่วงเวลา */
+}
+#addPartSetUp:hover {
+  background-color: rgb(3, 33, 186);
+  color:rgb(254, 253, 253); /* เปลี่ยนสีข้อความเมื่อ hover */
+  font-weight: 900;
+  transform: translateY(-3px); /* ยกปุ่มขึ้น */
+  box-shadow: 1px 1px 3px 3px;
+}
+.large-checkbox {
+  width: 20px;
+  /* Adjust the width as needed */
+  height: 20px;
+  /* Adjust the height as needed */
+}
+.large-checkbox1 {
+  width: 20px;
+  /* Adjust the width as needed */
+  height: 20px;
+  /* Adjust the height as needed */
+}
+#registerTool {
+  background-color: green;
+  color: white;
+  border: none;
+  font-size: 16px;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+#registerTool:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562);
+}
+
+#condition-machine{
+  background-color: rgb(159, 243, 243);
+  padding: 5px 5px 5px 15px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px 2px rgb(83, 82, 82) ;
+}
+#condition-machine-qc{
+  background: rgb(173, 174, 174);
+  padding: 5px 5px 5px 15px;
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px 2px rgb(83, 82, 82) ;
+}
+
+/* ทำให้ thead ของตารางอยู่กับที่ขณะเลื่อน */
+#table-product-number thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #343a40; /* สีพื้นหลังเดียวกับ thead ที่คุณใช้ */
+  color: white; /* สีของข้อความใน thead */
+}
+
+.projector-check{
+  background-color: #babbbc;
+  padding: 20px 20px 20px 20px;
+  align-items: center;
+  text-align: center;
+}
+.addpart-setup{
+  background-color: #f963f9;
+  padding: 20px 20px 20px 20px;
+  align-items: center;
+  text-align: center;
+}
+
+#qc-select-room-check{
+  background-color: rgb(252, 252, 130);
+  border-radius: 5px;
+}
+#qc-select-room-checkl{
+  background-color: rgb(252, 252, 130);
+  margin-left: 15px;
+  border-radius: 5px;
+}
+
+/* ปรับขนาด radio buttons */
+input[type="radio"] {
+  transform: scale(2.0); /* เพิ่มขนาดของ radio button */
+  margin-right: 8px; /* เพิ่มระยะห่างระหว่าง radio button กับ label */
+}
+#close-modal-projector{
+  padding: 8px 50px 8px 50px;
+}
+#close-modal-projector:hover{
+  transform: translateY(-5px);
+  /* ทำให้ปุ่มลอยขึ้น 5px */
+  box-shadow: 0 4px 8px rgba(61, 61, 61, 0.562);
+  /* เพิ่มเงาเพื่อให้ดูเหมือนลอยขึ้น */
+}
+
+.qc-line-check {
+  background-color: #f6e95a;
+  text-align: center;
+  padding: 15px 20px 15px 20px;
+}
+.sleeve{
+  font-size: 1.2rem;
+  color: black;
+  padding: 1px 8px 1px 8px; 
+}
+.sleeve:hover {
+  transform: translateY(-0.5px);
+  box-shadow: 0 4px 8px rgba(7, 7, 7, 0.562);
+  border-radius: 3px;
+  transition: transform 0.05s ease-in-out 0.05s, box-shadow 0.05s ease-in-out 0.05s; /* เพิ่มการเปลี่ยนแปลงที่นุ่มนวลพร้อมหน่วงเวลา */
+}
+.shaft{
+  font-size: 1.2rem;
+  color: black;
+  padding: 1px 8px 1px 8px; 
+}
+.shaft:hover {
+  transform: translateY(-1px);
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(7, 7, 7, 0.562);
+}
+#modal-close{
+  font-size: 1.2rem;
+  padding: 10px 50px 10px 50px;
+}
+
+.input-group {
+  width: 100%; /* Ensure the group takes full width */
+}
+
+.input-group .form-control {
+  border-radius: 0.25rem 0 0 0.25rem; /* Rounded corners */
+}
+
+.input-group .btn {
+  border-radius: 0 0.25rem 0.25rem 0; /* Match the button to the input */
+}
+
+.tool-product-auto{
+  color: white;
+}
+
+.text-success {
+  color: green;
+}
+
+.text-danger {
+  color: red;
+}
+
+.blinking1-button {
+  width: 100px; /* ตั้งค่าความกว้าง */
+  height: 100px; /* ตั้งค่าความสูงให้เท่ากับความกว้างเพื่อสร้างทรงกลม */
+  border-radius: 50%; /* ทำให้เป็นทรงกลม */
+  font-size: 1.1rem;
+  padding: 0; /* ปรับ padding เพื่อให้เนื้อหากึ่งกลาง */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blinking-button {
+  width: 100px; /* ตั้งค่าความกว้าง */
+  height: 100px; /* ตั้งค่าความสูงให้เท่ากับความกว้างเพื่อสร้างทรงกลม */
+  border-radius: 50%; /* ทำให้เป็นทรงกลม */
+  font-size: 1.1rem;
+  padding: 0; /* ปรับ padding เพื่อให้เนื้อหากึ่งกลาง */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: blink 1s infinite; /* ทำให้กระพริบ */
+}
+
+.tool-item {
+  display: flex;
+  /* align-items: center; */
+  margin-bottom: 10px;
+}
+
+.form-check-label{
+  margin-left: 1.8rem;
+}
+.tool-checkbox {
+  margin-right: 2.8rem;
+  /* margin-right: 2.8rem; */
+  /* ระยะห่างระหว่าง tool_no และตัวเลือก */
+}
+
+.status-options {
+  display: flex;
+  gap: 15px;
+  /* margin-top: 10px; */
+  /* ระยะห่างระหว่าง Complete, Burr, และ Broken */
+}
+.tool-checkbox .form-check-input,
+.status-options input[type="checkbox"] {
+  transform: scale(1.5); /* ปรับขนาดตามที่ต้องการ */
+  width: 15px; /* กำหนดความกว้าง */
+  height: 15px; /* กำหนดความสูง */
+  margin-right: 10px; /* เพิ่มระยะห่างระหว่าง checkbox กับ label */
+}
+
+.custom-checkbox {
+  transform: scale(1.5); /* เปลี่ยนค่า 1.5 เป็นขนาดที่ต้องการ */
+  margin-right: 10px; /* เพิ่มระยะห่างถ้าต้องการ */
+}
+.form-check-input{
+  padding: 10px;
+}
+
+#tool-complete{
+  color: blue;
+  padding: 0px 1.8rem 0px 0px;
+  margin-left: 1.8rem;
+}
+#tool-burr{
+  color: rgb(253, 102, 190);
+  padding: 0px 1.8rem 0px 0px;
+  margin-left: 1.8rem;
+}
+#tool-broken{
+  color: rgb(255, 0, 0);
+  padding: 0px 1.8rem 0px 0px;
+  margin-left: 1.8rem;
+}
+#tool-cf{
+  color: rgb(6, 6, 6);
+  padding: 0px 1.8rem 0px 0px;
+  margin-left: 1.8rem;
+}
+
+.input-spec {
+  flex: 1; /* ลดขนาด input ให้น้อยลง */
+  margin-right: 10px; /* ระยะห่างระหว่าง input กับ checkbox */
+}
+
+/* ใช้ flexbox ใน container เพื่อจัดระเบียบให้ดี */
+.input-checkbox-container {
+  display: flex;
+  justify-content: space-between; /* จัดตำแหน่ง input และ checkbox ให้ห่างกัน */
+  align-items: center; /* จัดให้ checkbox และ input อยู่ในแนวเดียวกัน */
+  margin-bottom: 10px; /* เพิ่มระยะห่างระหว่างรายการแต่ละรายการ */
+}
+
+.pass-checkbox,
+.reject-checkbox {
+  margin-left: 30px; /* เพิ่มระยะห่างจาก input */
+}
+
+/* คุณสามารถเพิ่มการแสดงผลเมื่อ checkbox ถูกเลือก */
+.pass-checkbox:checked{
+  background-color: #4CAF50; /* แสดงสีที่แตกต่างเมื่อ checkbox ถูกเลือก */
+}
+.reject-checkbox:checked{
+  background-color: #f44336; 
+}
+
+/* ทำให้ข้อความ "Pass" และ "Reject" อยู่บน checkbox */
+.status-options label {
+  display: block; /* ทำให้ label เป็น block เพื่อให้มันขึ้นไปอยู่บน checkbox */
+  margin-bottom: 5px; /* เพิ่มระยะห่างระหว่าง label กับ checkbox */
+}
+#label-pass-reject{
+  padding-left: 3rem;
+}
+/* เพิ่มขนาดของ checkbox */
+.pass-checkbox-qcline, .reject-checkbox-qcline {
+  transform: scale(1.5); /* ทำให้ checkbox ใหญ่ขึ้น */
+  margin-right: 10px;
+}
+.pass-checkbox-qcline:checked{
+  background-color: #4CAF50; /* แสดงสีที่แตกต่างเมื่อ checkbox ถูกเลือก */
+}
+.reject-checkbox-qcline:checked{
+  background-color: #f90606; /* แสดงสีที่แตกต่างเมื่อ checkbox ถูกเลือก */
+}
+
+.specs-container {
+  display: flex;
+  flex-direction: column; /* ให้แน่ใจว่า item ถูกจัดเรียงในแนวตั้ง */
+  gap: 1rem; /* ระยะห่างระหว่าง spec items */
+}
+
+.spec-item {
+  border: 1px solid #ccc; /* ขอบรอบ item */
+  padding: 10px; /* Padding ภายใน item */
+  border-radius: 5px; /* มุมโค้ง */
+  background-color: #f9f9f9; /* สีพื้นหลัง */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* เงาเบา */
+  width: 100%; /* ทำให้ spec item ใช้ความกว้างเต็ม */
+}
+
+.spec-item input {
+  width: 100%; /* กำหนดให้ input ใช้ความกว้างเต็ม */
+  margin-top: 0.5rem; /* ระยะห่างด้านบน */
+  box-sizing: border-box; /* รวม padding และ border ในการคำนวณขนาด */
+}
+
+.separator {
+  height: 3px; /* กำหนดความหนาของเส้นแบ่ง */
+  background-color: #000; /* เปลี่ยนสีของเส้นแบ่งให้เป็นสีดำทึบ */
+  margin: 10px 0; /* ระยะห่างด้านบนและด้านล่าง */
+  width: 100%; /* ทำให้เส้นแบ่งเต็มความกว้าง */
+}
+
+.highlight {
+  background-color: rgb(243, 243, 150); /* เปลี่ยนสีพื้นหลังเป็นสีเหลือง */
+}
+
+.underline {
+  text-decoration: underline; /* ขีดเส้นใต้ */
+}
+
+.spacing {
+  margin: 0 10px; /* ระยะห่างระหว่างคำที่ต้องการเว้นวรรค */
+}
+
+/* สไตล์พื้นฐานของ Checkbox */
+.checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: white;
+  appearance: none; /* ซ่อน default checkbox */
+}
+#checkboxQCLine{
+  width: 20px;
+  height: 20px;
+}
+
+/* สไตล์เมื่อ Checkbox ถูกเลือก */
+.checkbox-blue:checked {
+  background-color: blue; /* เปลี่ยนสี Checkbox เป็นสีน้ำเงิน */
+  border: 1px solid blue;
+}
+
+#qc-line-pass{
+  margin-left: 2.5rem;
+}
+
+
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes slide {
+  0% {
+      transform: translateX(0);
+      /* border-color: white; */
+  }
+
+  50% {
+      transform: translateX(20px);
+      border-color: black;
+  }
+
+  100% {
+      transform: translateX(0px);
+      /* border-color: white; */
+  }
+}
+
+.walking-animation {
+  display: inline-block;
+  padding: 5px;
+  /* เพิ่ม padding เพื่อให้เห็นกรอบ */
+  /* border: 2px solid white; */
+  /* ตั้งค่าสีเริ่มต้นของกรอบ */
+  animation: slide 1s infinite;
+}
+
+/* กำหนดคีย์เฟรมสำหรับการเคลื่อนที่ */
+/* @keyframes moveIcon {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+} */
+/* เพิ่มการเคลื่อนที่ให้กับไอคอน */
+/* #icon-search {
+  animation: moveIcon 1s infinite; 
+} */
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.blinkingAF {
+  animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

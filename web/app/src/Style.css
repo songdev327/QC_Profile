@@ -1,0 +1,31 @@
+#qc-equipment-system{
+  width: 80%;
+  background: yellow;
+  padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
+  
+}
+#login-to-application{
+  width: 50%;
+  background: yellow;
+  padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
+}
+#register-member{
+ width: 50%;
+ background: rgb(18, 147, 245);
+ padding: 0.8rem 0.8rem 0.8rem 0.8rem;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 1px rgb(88, 87, 87);
+}
+#pos-on-qc{
+  background:rgb(237, 123, 74);
+  box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
+  color: white;
+}
+#pos-on-qc1{
+  background: yellow;
+  box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
+}

@@ -1,0 +1,180 @@
+#qc-equipment-system-1{
+    width: 80%;
+    background: rgb(18, 147, 245);
+    padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
+    color: white;
+  }
+#qc-equipment-system-2{
+    width: 80%;
+    background: yellow;
+    padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
+    color: rgb(6, 6, 6);
+  }
+  #register-member-2{
+    width: 50%;
+    background: yellow;
+    padding: 0.8rem 0.8rem 0.8rem 0.8rem;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgb(88, 87, 87);
+    color: rgb(6, 6, 6);
+    font-size: 1.8rem;
+   }
+   .status-qcEqm{
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid rgb(183, 183, 183) 1px;
+   }
+  #table-product-history{
+    background-color: black ;
+    color: white;
+  }
+#search {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  /* เพิ่ม transition สำหรับการเปลี่ยนแปลงที่นุ่มนวล */
+}
+
+/* สไตล์เมื่อเมาส์วางอยู่เหนือปุ่ม */
+#search:hover {
+  transform: translateY(-5px);
+  /* ทำให้ปุ่มลอยขึ้น 5px */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562);
+  /* เพิ่มเงาเพื่อให้ดูเหมือนลอยขึ้น */
+}
+#clear {
+  background-color:red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  /* เพิ่ม transition สำหรับการเปลี่ยนแปลงที่นุ่มนวล */
+}
+
+/* สไตล์เมื่อเมาส์วางอยู่เหนือปุ่ม */
+#clear:hover {
+  transform: translateY(-5px);
+  /* ทำให้ปุ่มลอยขึ้น 5px */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562);
+  /* เพิ่มเงาเพื่อให้ดูเหมือนลอยขึ้น */
+}
+#export {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  /* เพิ่ม transition สำหรับการเปลี่ยนแปลงที่นุ่มนวล */
+}
+
+/* สไตล์เมื่อเมาส์วางอยู่เหนือปุ่ม */
+#export:hover {
+  transform: translateY(-5px);
+  /* ทำให้ปุ่มลอยขึ้น 5px */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.562);
+  /* เพิ่มเงาเพื่อให้ดูเหมือนลอยขึ้น */
+}
+
+#login-setting-qc{
+  background-color: rgb(248, 250, 129);
+}
+
+.update-part-name{
+  background-color:rgb(4, 122, 249);
+  padding: 10px 20px;
+  text-align: center;
+  box-shadow: 1px 3px 3px 2px;
+  color: white;
+}
+#userLogin{
+  border: white;
+  color: white;
+}
+#userLoginQC{
+  background-color: rgb(248, 250, 129);
+  border: rgb(248, 250, 129);
+  color:rgb(248, 250, 129);
+}
+#userLogin-addmachine{
+  border: white;
+  background-color: rgb(247, 248, 249);
+  color:rgb(247, 248, 249);
+}
+.sleeve-component{
+  padding: 10px;
+  background-color: rgb(79, 243, 90);
+  font-weight: 550;
+}
+.sleeve-component-palen{
+  padding: 10px;
+  background-color:rgb(184, 184, 184);
+  font-weight: 550;
+}
+.shaft-component{
+  padding: 10px;
+  background-color: rgb(104, 179, 254);
+  font-weight: 550;
+}
+
+.custom-row {
+  display: flex;
+  flex-wrap: wrap; /* เพื่อให้ปุ่มแสดงในหลายบรรทัดเมื่อหน้าจอแคบ */
+  justify-content: flex-start; /* จัดเรียงปุ่มให้ชิดทางซ้าย */
+  gap: 10px; /* ระยะห่างระหว่างปุ่ม */
+}
+
+.custom-col-12 {
+  max-width: 320px; /* กำหนดความกว้างสูงสุดของปุ่ม */
+}
+
+.custom-button {
+  width: 100%; /* ให้ปุ่มเต็มความกว้างของคอลัมน์ */
+  margin: 5px 0; /* ระยะห่างด้านบนและล่างของปุ่ม */
+  font-size: 0.9rem; /* ปรับขนาดตัวหนังสือ */
+  font-weight: 600;
+  /* color: rgb(0, 0, 0); */
+  display: flex; /* ใช้ flex เพื่อจัดการไอคอนและข้อความในแนวนอน */
+  justify-content: flex-start; /* จัดไอคอนและข้อความให้ชิดซ้าย */
+  align-items: center; /* จัดไอคอนและข้อความให้อยู่ในแนวเดียวกัน */
+  text-align: left; /* กำหนดข้อความให้ชิดซ้าย */
+}
+
+.custom-button i, .custom-button svg { 
+  margin-right: 8px; /* เพิ่มระยะห่างระหว่างไอคอนและข้อความ */
+}
+
+#back-audit{
+  background-color: rgb(253, 250, 250);
+}
+
+/* ปรับขนาดตัวหนังสือบนหน้าจอเล็ก */
+@media (max-width: 576px) {
+  .custom-button {
+    font-size: 0.8rem; /* ขนาดตัวหนังสือเล็กลงเมื่อหน้าจอเล็ก */
+  }
+}
+
+/* ปรับขนาดตัวหนังสือบนหน้าจอกว้าง */
+@media (min-width: 768px) {
+  .custom-col-12 {
+    flex: 1 1 48%; /* แสดง 2 คอลัมน์บนหน้าจอที่กว้างขึ้น */
+    font-size: 1.0rem; /* ขนาดตัวหนังสือใหญ่ขึ้นบนหน้าจอที่กว้าง */
+  }
+}
+
+/* ขนาดตัวหนังสือใหญ่ขึ้นบนหน้าจอกว้างมาก */
+@media (min-width: 1024px) {
+  .custom-col-12 {
+    flex: 1 1 23%; /* แสดง 4 คอลัมน์บนหน้าจอที่กว้างขึ้น */
+    font-size: 1.2rem; /* ขนาดตัวหนังสือใหญ่สุดบนหน้าจอที่กว้างมาก */
+  }
+}

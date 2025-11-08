@@ -1,0 +1,2276 @@
+/* admin.css - ปรับปรุงใหม่ให้เป็นมาตรฐานและสมดุล */
+
+.admin-container {
+    font-family: 'Kanit', 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #333;
+}
+
+/* หน้า Login */
+.admin-container .admin-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.admin-container .admin-login-form {
+    width: 360px;
+    padding: 32px;
+    background: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container .admin-login-form h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #343a40;
+    font-weight: 500;
+}
+
+.admin-container .form-group {
+    /* margin-bottom: 20px; */
+}
+
+.admin-container .form-group input {
+    width: 93%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.admin-container .form-group input:focus {
+    outline: none;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+}
+
+.admin-container .admin-login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #228be6;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.admin-container .admin-login-button:hover {
+    background-color: #1c7ed6;
+}
+
+.admin-container .admin-login-button:active {
+    transform: translateY(1px);
+}
+
+.admin-container .admin-login-button:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.admin-container .error-message {
+    padding: 12px;
+    background-color: #fff5f5;
+    color: #e03131;
+    margin-bottom: 20px;
+    text-align: center;
+    border-left: 4px solid #e03131;
+}
+
+/* ตัวโหลด */
+.admin-container .loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-container .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Dashboard */
+.admin-container .admin-dashboard {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 24px;
+}
+
+.admin-container .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    background-color: white;
+    padding: 16px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+#admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    background-color: rgb(0, 0, 0);
+    padding: 16px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-container .admin-header h1 {
+    margin: 0;
+    color: #343a40;
+    font-weight: 700;
+}
+
+.admin-container .admin-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-container .admin-info span {
+    color: #495057;
+    font-weight: 500;
+}
+
+.admin-container .logout-button {
+    padding: 8px 16px;
+    background-color: #fa5252;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.admin-container .logout-button:hover {
+    background-color: #e03131;
+}
+
+.admin-container .admin-nav {
+    display: flex;
+    background-color: white;
+    padding: 4px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-container .admin-nav a {
+    padding: 12 px 20px;
+    color: #495057;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    font-size: 16px;
+}
+
+.admin-container .admin-nav a:hover {
+    background-color: #f1f3f5;
+}
+
+.admin-container .admin-nav a.active {
+    background-color: #228be6;
+    color: white;
+}
+
+.admin-container .dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.admin-container .stat-value {
+    font-size: 36px;
+    font-weight: 600;
+    margin: 0;
+    color: #228be6;
+}
+
+.admin-container .recent-activity {
+    background-color: white;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-container .recent-activity h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #343a40;
+    font-weight: 500;
+}
+
+.admin-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-container table th,
+.admin-container table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.admin-container table th {
+    background-color: #f8f9fa;
+    font-weight: 500;
+    color: #495057;
+}
+
+.admin-container table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* จัดการผู้ใช้ */
+.admin-container .user-controls,
+.admin-container .status-view-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    margin: 24px 0;
+    width: 100%;
+    position: relative;
+}
+
+.admin-container .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.admin-container .stat-users {
+
+    font-size: 18px;
+    font-weight: 600;
+    color: #228be6;
+}
+
+.admin-container .search-input {
+    padding: 10px 16px;
+    border: 1px solid #ced4da;
+    width: 300px;
+    height: 15px;
+    font-size: 14px;
+}
+
+.admin-container .search-input:focus {
+    outline: none;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+}
+
+.admin-container .add-user-btn,
+.admin-container .add-statusview-btn {
+    padding: 10px 20px;
+    background-color: #40c057;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.admin-container .add-user-btn:hover,
+.admin-container .add-statusview-btn {
+    background-color: #37b24d;
+}
+
+.admin-container .users-table {
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-container .status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.admin-container .status-badge.active {
+    background-color: #ebfbee;
+    color: #2b8a3e;
+}
+
+.admin-container .status-badge.inactive {
+    background-color: #fff5f5;
+    color: #e03131;
+}
+
+.admin-container .edit-btn,
+.admin-container .delete-btn {
+    padding: 6px 12px;
+    border: none;
+    margin-right: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.admin-container .edit-btn {
+    background-color: #228be6;
+    color: white;
+}
+
+.admin-container .edit-btn:hover {
+    background-color: #1c7ed6;
+}
+
+.admin-container .delete-btn {
+    background-color: #fa5252;
+    color: white;
+}
+
+.admin-container .delete-btn:hover {
+    background-color: #e03131;
+}
+
+/* ตั้งค่า */
+.admin-container .settings-container {
+    background-color: white;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-container .settings-group {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.admin-container .settings-group h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #343a40;
+    font-weight: 500;
+}
+
+.admin-container .checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.admin-container .checkbox-group input {
+    margin-right: 12px;
+}
+
+.admin-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    background-color: white;
+    font-size: 14px;
+}
+
+.admin-container select:focus {
+    outline: none;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+}
+
+.admin-container .form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.admin-container .secondary-btn,
+.admin-container .warning-btn {
+    padding: 10px 16px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.admin-container .secondary-btn {
+    background-color: #868e96;
+    color: white;
+}
+
+.admin-container .secondary-btn:hover {
+    background-color: #495057;
+}
+
+.admin-container .warning-btn {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.admin-container .warning-btn:hover {
+    background-color: #e8590c;
+}
+
+.admin-container .save-settings-btn {
+    padding: 12px 24px;
+    background-color: #228be6;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 24px;
+}
+
+.admin-container .save-settings-btn:hover {
+    background-color: #1c7ed6;
+}
+
+.admin-container .save-settings-btn:active {
+    transform: translateY(1px);
+}
+
+/* เพิ่ม CSS สำหรับปุ่มกลับ - เพิ่มส่วนนี้ต่อท้ายไฟล์ admin.css */
+.admin-container .back-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.admin-container .back-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #f1f3f5;
+    color: #495057;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.admin-container .back-button:hover {
+    background-color: #dee2e6;
+    color: #212529;
+}
+
+.admin-container .back-button:active {
+    transform: translateY(1px);
+}
+
+/* ====== ยืนยันก่อนออกจากระบบ ====== */
+/* กล่องยืนยันการออกจากระบบ */
+.admin-container .confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+.admin-container .confirmation-box {
+    background-color: white;
+    padding: 24px;
+    width: 400px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: scaleIn 0.3s ease;
+}
+
+.admin-container .confirmation-box h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #343a40;
+    font-weight: 500;
+}
+
+.admin-container .confirmation-box p {
+    margin-bottom: 24px;
+    color: #495057;
+    font-size: 16px;
+}
+
+.admin-container .confirmation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.admin-container .confirm-button {
+    padding: 10px 20px;
+    background-color: #fa5252;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.admin-container .confirm-button:hover {
+    background-color: #e03131;
+}
+
+.admin-container .cancel-button {
+    padding: 10px 20px;
+    background-color: #e9ecef;
+    color: #495057;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.admin-container .cancel-button:hover {
+    background-color: #dee2e6;
+}
+
+/* แอนิเมชั่น */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* =============== ปรับปรุงส่วนของ Header และ Nav ================*/
+.admin-container .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+#text-h1{
+    color: white;
+}
+
+.admin-container .admin-nav {
+    display: flex;
+    background-color: white;
+
+    padding: 4px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 70px;
+    /* ระยะห่างจากด้านบนหลังจาก admin-header */
+    z-index: 9;
+}
+
+.admin-container .admin-nav a {
+    flex: 1;
+    text-align: center;
+    padding: 12px 20px;
+    color: #495057;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.admin-container .admin-nav a:hover {
+    background-color: #f1f3f5;
+    color: #228be6;
+}
+
+.admin-container .admin-nav a.active {
+    background-color: #228be6;
+    color: white;
+    box-shadow: 0 2px 8px rgba(34, 139, 230, 0.3);
+    /* transform: translateY(-2px); */
+}
+
+/* เพิ่ม transition เมื่อเปลี่ยนหน้า */
+.admin-container .admin-dashboard {
+    transition: opacity 0.3s ease;
+}
+
+/* ปรับแต่ง responsive */
+@media (max-width: 768px) {
+    .admin-container .admin-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .admin-container .admin-info {
+        margin-top: 10px;
+    }
+
+    .admin-container .admin-nav {
+        overflow-x: auto;
+    }
+
+    .admin-container .admin-nav a {
+        white-space: nowrap;
+    }
+}
+
+/* =============== สไตล์สำหรับหน้าจัดการผู้ใช้ ===============*/
+.admin-container .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.admin-container .spinner-large {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #228be6;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 16px;
+}
+
+.admin-container .no-data {
+    text-align: center;
+    padding: 20px 0;
+    color: #868e96;
+    font-style: italic;
+}
+
+.admin-container .permission-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.admin-container .permission-badge.admin {
+    background-color: #ffec99;
+    color: #e67700;
+}
+
+.admin-container .permission-badge.user {
+    background-color: #d3f9d8;
+    color: #2b8a3e;
+}
+
+/* ปรับปรุงตารางผู้ใช้ */
+.admin-container .users-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-container .users-table th {
+    background-color: #b0d6fc;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #1d1f20;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 18px;
+}
+
+.admin-container .users-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 14px;
+}
+
+.admin-container .users-table .management {
+    display: flex;
+}
+
+.admin-container .users-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.admin-container .users-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* เพิ่มเติมสำหรับปุ่มในตาราง */
+.admin-container .edit-btn,
+.admin-container .delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.admin-container .edit-btn {
+    background-color: #228be6;
+    color: white;
+}
+
+.admin-container .edit-btn:hover {
+    background-color: #1c7ed6;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container .delete-btn {
+    background-color: #fa5252;
+    color: white;
+}
+
+.admin-container .delete-btn:hover {
+    background-color: #e03131;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container .table-header .table th {
+    background-color: #4dabf7;
+}
+
+/* ปรับการแสดงผลบนหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+    .admin-container .users-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .admin-container .user-controls,
+    .admin-container .status-view-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .admin-container .search-input {
+        width: 100%;
+    }
+}
+
+/* =============== สไตล์แบบแท็บสำหรับปุ่ม data-management-buttons ===============*/
+.admin-container .data-management-buttons {
+    display: flex;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 24px;
+    background-color: var(--bg-secondary);
+    border-radius: 8px 8px 0 0;
+    overflow-x: auto;
+    /* เพิ่มการเลื่อนแนวนอนสำหรับหน้าจอเล็ก */
+}
+
+.admin-container .data-management-buttons button {
+    padding: 12px 18px;
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 8px 8px 0 0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    position: relative;
+    bottom: -2px;
+    /* ชดเชยเส้นขอบด้านล่าง */
+}
+
+.admin-container .data-management-buttons button:hover {
+    background-color: var(--bg-primary);
+    color: var(--primary-color);
+}
+
+.admin-container .data-management-buttons button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* สไตล์สำหรับหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+    .admin-container .data-management-buttons {
+        flex-wrap: nowrap;
+        /* ป้องกันการแตกเป็นหลายบรรทัด */
+    }
+
+    .admin-container .data-management-buttons button {
+        white-space: nowrap;
+        /* ป้องกันข้อความตัดบรรทัด */
+    }
+}
+
+/* =============== สไตล์สำหรับหน้า AddUserModal สำหรับเพิ่มผู้ใช้ ===============*/
+/* =============== สไตล์สำหรับหน้า AddUserModal สำหรับเพิ่มผู้ใช้ ===============*/
+.admin-container .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.admin-container .modal-container {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: scaleIn 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.admin-container .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #fff690;
+    border-radius: 8px 8px 0 0;
+}
+
+.admin-container .modal-header h3 {
+    margin: 0;
+    color: #343a40;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.admin-container .modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: #000000;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-container .modal-close-btn:hover {
+    color: #343a40;
+}
+
+.admin-container .add-user-form {
+    padding: 24px;
+}
+
+.admin-container .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.admin-container .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* สำคัญสำหรับการจัดตำแหน่ง label */
+}
+
+/* ปรับปรุงสไตล์ของ label */
+.admin-container .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #495057;
+    font-size: 14px;
+    position: relative;
+    background-color: transparent;
+}
+
+.admin-container .form-group input,
+.admin-container .form-group select {
+    width: 100%;
+    height: 40px;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+/* ทำให้ placeholder สีจางลง */
+.admin-container .form-group input::placeholder {
+    color: #adb5bd;
+    opacity: 0.7;
+}
+
+.admin-container .form-group input:focus,
+.admin-container .form-group select:focus {
+    outline: none;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.2);
+}
+
+/* เพิ่มสำหรับการจัดการกับ label ที่มีเครื่องหมายดอกจัน */
+.admin-container .form-group label::after {
+    content: attr(data-required);
+    color: #fa5252;
+    margin-left: 2px;
+}
+
+.admin-container .error-message {
+    color: #e03131;
+    background-color: #fff5f5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    border-left: 3px solid #e03131;
+}
+
+.admin-container .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    border-top: 1px solid #e9ecef;
+    padding-top: 20px;
+}
+
+.admin-container .cancel-button,
+.admin-container .save-button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.admin-container .cancel-button {
+    background-color: #f1f3f5;
+    color: #495057;
+}
+
+.admin-container .cancel-button:hover:not(:disabled) {
+    background-color: #dee2e6;
+}
+
+.admin-container .save-button {
+    background-color: #228be6;
+    color: white;
+}
+
+.admin-container .save-button:hover:not(:disabled) {
+    background-color: #1c7ed6;
+}
+
+.admin-container .save-button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.admin-container .save-button:disabled,
+.admin-container .cancel-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.admin-container .button-spinner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-container .button-spinner .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .admin-container .form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .admin-container .modal-container {
+        width: 95%;
+    }
+
+    .admin-container .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .admin-container .cancel-button,
+    .admin-container .save-button {
+        width: 100%;
+    }
+}
+
+/* เพิ่มส่วนนี้ต่อท้ายไฟล์ admin.css เพื่อรองรับ Dark Theme */
+
+/* =============================== ตัวแปร CSS สำหรับ Light Theme (ค่าเริ่มต้น) ===============================  */
+:root {
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #495057;
+    --border-color: #e9ecef;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --primary-color: #228be6;
+    --primary-hover: #1c7ed6;
+    --success-color: #40c057;
+    --warning-color: #fd7e14;
+    --danger-color: #fa5252;
+    --table-header-bg: #b0d6fc;
+    --table-row-hover: #f8f9fa;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+}
+
+/* ตัวแปร CSS สำหรับ Dark Theme */
+body.dark-theme {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #e6e6e6;
+    --text-secondary: #b0b0b0;
+    --border-color: #4d4d4d;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --primary-color: #3291e6;
+    --primary-hover: #4dabf7;
+    --success-color: #37b24d;
+    --warning-color: #f59f00;
+    --danger-color: #e03131;
+    --table-header-bg: #354f70;
+    --table-row-hover: #3d3d3d;
+    --input-bg: #333333;
+    --input-border: #4d4d4d;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* ใช้ตัวแปร CSS กับส่วนประกอบต่างๆ */
+.admin-container {
+    color: var(--text-primary);
+}
+
+.admin-container .admin-dashboard {
+    background-color: var(--bg-primary);
+}
+
+.admin-container .admin-header,
+.admin-container .admin-nav,
+.admin-container .settings-container,
+.admin-container .recent-activity,
+.admin-container .users-table {
+    background-color: var(--bg-secondary);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.admin-container .admin-header h1,
+.admin-container .settings-group h3 {
+    color: var(--text-primary);
+}
+
+.admin-container .admin-info span {
+    color: var(--text-secondary);
+}
+
+.admin-container .admin-nav a {
+    color: var(--text-secondary);
+}
+
+.admin-container .admin-nav a:hover {
+    background-color: var(--bg-primary);
+}
+
+.admin-container .admin-nav a.active {
+    background-color: var(--primary-color);
+}
+
+.admin-container .form-group label {
+    color: var(--text-secondary);
+}
+
+.admin-container .form-group input,
+.admin-container .form-group select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--text-primary);
+}
+
+.admin-container .save-settings-btn,
+.admin-container .edit-btn {
+    background-color: var(--primary-color);
+}
+
+.admin-container .save-settings-btn:hover,
+.admin-container .edit-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.admin-container .add-user-btn {
+    background-color: var(--success-color);
+}
+
+.admin-container .delete-btn {
+    background-color: var(--danger-color);
+}
+
+.admin-container .warning-btn {
+    background-color: var(--warning-color);
+}
+
+.admin-container table th {
+    background-color: var(--table-header-bg);
+    color: var(--text-primary);
+}
+
+.admin-container table td {
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.admin-container table tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+.admin-container .modal-overlay {
+    background-color: var(--modal-overlay);
+}
+
+.admin-container .modal-container,
+.admin-container .confirmation-box {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* ========================== AdminStatusView Details ========================= */
+/* Details Button */
+.admin-container .details-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-container .details-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* ตกแต่งส่วน Header Actions */
+.admin-container .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Toggle Switch Container */
+.admin-container .view-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f2f2f2;
+    padding: 6px 12px;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container .view-mode-toggle span {
+    font-size: 13px;
+    color: #777;
+    transition: color 0.3s;
+}
+
+.admin-container .view-mode-toggle span.active {
+    color: #228be6;
+    font-weight: 600;
+}
+
+/* ตกแต่ง Toggle Switch */
+.admin-container .switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.admin-container .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.admin-container .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.admin-container .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+.admin-container .switch input:checked+.slider {
+    background-color: #228be6;
+}
+
+.admin-container .switch input:focus+.slider {
+    box-shadow: 0 0 1px #228be6;
+}
+
+.admin-container .switch input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+/* ทำให้ slider เป็นวงกลม */
+.admin-container .slider.round {
+    border-radius: 24px;
+}
+
+.admin-container .slider.round:before {
+    border-radius: 50%;
+}
+
+/* Details Modal */
+.admin-container .details-modal {
+    width: 95%;
+    max-width: 1400px;
+    max-height: 85vh;
+    padding: 12px 16px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.admin-container .details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    background-color: #fff690;
+    padding: 16px 20px;
+    border-radius: 8px 8px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+.admin-container .details-header .header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-container .details-header h2 {
+    margin: 0;
+    color: #1d1f20;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.admin-container .work-order-info {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+}
+
+.admin-container .work-order-info div {
+    display: flex;
+    gap: 5px;
+}
+
+.admin-container .work-order-info strong {
+    color: #343a40;
+}
+
+.admin-container .close-btn {
+    background: none;
+    border: none;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    color: #000000;
+    font-weight: bold;
+}
+
+.admin-container .close-btn:hover {
+    color: #343a40;
+}
+
+.admin-container .details-content {
+    padding: 0 8px 16px 8px;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.admin-container .details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    table-layout: fixed;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    /* ทำให้มุมมนเวลาใช้ border-radius */
+    transition: opacity 0.3s ease;
+}
+
+.admin-container .details-table th {
+    background-color: var(--table-header-bg);
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border: 1px solid #565656;
+    /* เส้นขอบสีเทาเข้ม */
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-container .details-table td {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* เส้นแบ่งแนวนอนที่ชัดเจนระหว่างกลุ่มข้อมูล */
+.admin-container .details-table tr:nth-child(1n) td {
+    border-bottom: 2px solid #797979;
+    /* เส้นแบ่งกลุ่มเป็นสีเทาเข้ม */
+}
+
+/* เพิ่มการไฮไลท์ช่องที่มีข้อมูลพิเศษ */
+.admin-container .details-table td.special-cell {
+    background-color: #f0f8ff;
+    /* ไฮไลท์ด้วยสีฟ้าอ่อน */
+    border: 1px solid #4f95d8;
+    /* ขอบสีฟ้า */
+}
+
+/* สร้างกรอบสีดำโดยรอบ header ส่วนบน */
+.admin-container .details-table thead {
+    border-bottom: 2px solid #000000;
+    position: sticky;
+    z-index: 2;
+}
+
+/* ปรับแต่งค่า INPUT_QTY */
+.admin-container .details-table td:nth-child(7) {
+    font-weight: 500;
+    color: #0056b3;
+    /* สีฟ้าเข้ม */
+}
+
+/* ปรับแต่งค่า GOOD และ NG */
+.admin-container .details-table td:nth-child(11) {
+    font-weight: 500;
+    color: #008000;
+    /* สีเขียว */
+}
+
+.admin-container .details-table td:nth-child(12) {
+    font-weight: 500;
+}
+
+/* ตั้งความกว้างของแต่ละคอลัมน์ */
+.admin-container .details-table th:nth-child(1),
+.admin-container .details-table td:nth-child(1) {
+    /* PROCESS_CODE */
+    width: 5%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(2),
+.admin-container .details-table td:nth-child(2) {
+    /* PROCESS_NAME */
+    width: 15%;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(3),
+.admin-container .details-table td:nth-child(3) {
+    /* PROCESS_NUMBER */
+    width: 5%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(4),
+.admin-container .details-table td:nth-child(4) {
+    /* STATUS */
+    width: 5%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(5),
+.admin-container .details-table td:nth-child(5) {
+    /* INPUT_AS */
+    width: 5%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(6),
+.admin-container .details-table td:nth-child(6) {
+    /* INPUT QTY */
+    width: 5%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(7),
+.admin-container .details-table td:nth-child(7) {
+    /* PRODUCTION OUTPUT QTY. */
+    width: 45%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(8),
+.admin-container .details-table td:nth-child(8) {
+    /* 
+    ปรับความกว้างของคอลัมน์ DATE 
+    - ให้พื้นที่เพียงพอสำหรับวันที่ 
+    - ประมาณ 10% ของความกว้างรวม 
+    */
+    width: 15%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(9),
+.admin-container .details-table td:nth-child(9) {
+    /* 
+    ปรับความกว้างของคอลัมน์ SHIFT 
+    - ต้องการพื้นที่น้อย เนื่องจากเป็นเพียง M หรือ N 
+    - ประมาณ 5% ของความกว้างรวม 
+    */
+    width: 5%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(10),
+.admin-container .details-table td:nth-child(10) {
+    /* 
+    ปรับความกว้างของคอลัมน์ GOOD 
+    - เน้นการแสดงจำนวนชิ้นงานดี 
+    - ประมาณ 7% ของความกว้างรวม 
+    */
+    width: 7%;
+    text-align: center;
+    border-right: 2px solid #565656;
+    font-weight: 500;
+    color: #008000;
+    /* สีเขียวสำหรับจำนวนชิ้นงานดี */
+}
+
+.admin-container .details-table th:nth-child(11),
+.admin-container .details-table td:nth-child(11) {
+    /* 
+    ปรับความกว้างของคอลัมน์ NG 
+    - เน้นการแสดงจำนวนชิ้นงานเสีย 
+    - ประมาณ 7% ของความกว้างรวม 
+    */
+    width: 7%;
+    text-align: center;
+    border-right: 2px solid #565656;
+    font-weight: 500;
+    color: #dc3545;
+    /* สีแดงสำหรับจำนวนชิ้นงานเสีย */
+}
+
+.admin-container .details-table th:nth-child(12),
+.admin-container .details-table td:nth-child(12) {
+    /* 
+    ปรับความกว้างของคอลัมน์ OPT1 
+    - สำหรับข้อมูลพนักงานหรือรหัสพิเศษ 
+    - ประมาณ 8% ของความกว้างรวม 
+    */
+    width: 8%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(13),
+.admin-container .details-table td:nth-child(13) {
+    /* 
+    ปรับความกว้างของคอลัมน์ OPT2 
+    - สำหรับข้อมูลพนักงานหรือรหัสพิเศษ 
+    - ประมาณ 8% ของความกว้างรวม 
+    */
+    width: 8%;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(14),
+.admin-container .details-table td:nth-child(14) {
+    /* QC. DATE*/
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table th:nth-child(15),
+.admin-container .details-table td:nth-child(15) {
+    /* QC. SIGN*/
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+/* status-mode */
+.admin-container .details-table .status-mode th:nth-child(1),
+.admin-container .details-table .status-mode td:nth-child(1) {
+    /* PROCESS_CODE */
+    width: 35px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(2),
+.admin-container .details-table .status-mode td:nth-child(2) {
+    /* PROCESS_CODE */
+    width: 40px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(3),
+.admin-container .details-table .status-mode td:nth-child(3) {
+    /* PROCESS_CODE */
+    width: 25px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(4),
+.admin-container .details-table .status-mode td:nth-child(4) {
+    /* PROCESS_CODE */
+    width: 20px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(5),
+.admin-container .details-table .status-mode td:nth-child(5) {
+    /* PROCESS_NAME */
+    width: 40px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(6),
+.admin-container .details-table .status-mode td:nth-child(6) {
+    /* PROCESS_NUMBER */
+    width: 25px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(7),
+.admin-container .details-table .status-mode td:nth-child(7) {
+    /* STATUS */
+    width: 10px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(8),
+.admin-container .details-table .status-mode td:nth-child(8) {
+    /* INPUT_AS */
+    width: 10px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table .status-mode th:nth-child(9),
+.admin-container .details-table .status-mode td:nth-child(9) {
+    /* LOT_OUT */
+    width: 10px;
+    text-align: center;
+    border-right: 2px solid #565656;
+}
+
+.admin-container .details-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.admin-container .details-table tr:hover {
+    background-color: var(--table-row-hover);
+}
+
+/* ทำให้แสดง tooltip เมื่อเลื่อนเมาส์ผ่าน */
+.admin-container .details-table td {
+    position: relative;
+}
+
+.admin-container .details-table td:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background: #343a40;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    visibility: visible;
+    opacity: 1;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Spinner for details loading */
+.admin-container .details-content .loading-container {
+    padding: 30px;
+}
+
+.admin-container .details-content .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+/* Status styling */
+.admin-container .details-table .status-ok {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.admin-container .details-table .status-warning {
+    background-color: #fff8e1;
+    color: #f57f17;
+    font-weight: 500;
+}
+
+.admin-container .details-table .status-error {
+    background-color: #ffebee;
+    color: #c62828;
+    font-weight: 500;
+}
+
+/* Process code highlight */
+.admin-container .details-table .process-code {
+    font-family: monospace;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* Make modal responsive */
+@media (max-width: 768px) {
+    .admin-container .details-modal {
+        width: 98%;
+        max-height: 90vh;
+    }
+
+    .admin-container .details-table {
+        font-size: 12px;
+    }
+
+    .admin-container .details-table th,
+    .admin-container .details-table td {
+        padding: 6px 4px;
+    }
+}
+
+/* ตกแต่งหน้าต่างการลบ */
+.admin-container .delete-modal {
+    max-width: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-container .delete-modal .modal-header {
+    background-color: #ffe3e3;
+    color: #e03131;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #ffc9c9;
+}
+
+.admin-container .delete-modal .modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #c92a2a;
+}
+
+.admin-container .delete-modal .modal-body {
+    padding: 20px;
+    background-color: white;
+}
+
+.admin-container .delete-modal p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.admin-container .delete-modal strong {
+    color: #e03131;
+    font-weight: 600;
+}
+
+/* ตกแต่งปุ่มตัวเลือกการลบ */
+.admin-container .delete-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.admin-container .delete-option-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.admin-container .delete-option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container .delete-option-btn small {
+    font-weight: 400;
+    color: #868e96;
+    margin-top: 4px;
+    font-size: 13px;
+}
+
+/* ปุ่มลบทั้งหมด */
+.admin-container .delete-option-btn.all {
+    border-color: #ffa8a8;
+    background-color: #fff5f5;
+    color: #e03131;
+}
+
+.admin-container .delete-option-btn.all:hover {
+    background-color: #ffe3e3;
+}
+
+/* ปุ่มลบเฉพาะ Status View */
+.admin-container .delete-option-btn.status {
+    border-color: #ffc078;
+    background-color: #fff9db;
+    color: #e8590c;
+}
+
+.admin-container .delete-option-btn.status:hover {
+    background-color: #ffec99;
+}
+
+/* ปุ่มลบเฉพาะ WOS Input */
+.admin-container .delete-option-btn.wos {
+    border-color: #a5d8ff;
+    background-color: #e7f5ff;
+    color: #1971c2;
+}
+
+.admin-container .delete-option-btn.wos:hover {
+    background-color: #d0ebff;
+}
+
+/* ตกแต่งปุ่มยกเลิก */
+.admin-container .modal-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.admin-container .cancel-btn {
+    padding: 10px 24px;
+    background-color: #f1f3f5;
+    color: #495057;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.admin-container .cancel-btn:hover {
+    background-color: #e9ecef;
+}
+
+/* ปรับปุ่มลบในตาราง */
+.admin-container .delete-btn {
+    background-color: #fa5252;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-left: 6px;
+}
+
+.admin-container .delete-btn:hover {
+    background-color: #e03131;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ปรับขนาดหน้าจอ */
+@media (max-width: 576px) {
+    .admin-container .delete-modal {
+        max-width: 95%;
+    }
+
+    .admin-container .delete-option-btn {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .admin-container .delete-option-btn small {
+        font-size: 12px;
+    }
+}
+
+/* Edit Mode Styles */
+/* Edit Mode Controls */
+.admin-container .edit-mode-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Edit Button */
+.admin-container .edit-btn {
+    background-color: #4dabf7;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-container .edit-btn:hover {
+    background-color: #339af0;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Save Button */
+.admin-container .save-btn {
+    background-color: #40c057;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.admin-container .save-btn:hover {
+    background-color: #37b24d;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-container .save-btn:disabled {
+    background-color: #8ce99a;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Cancel Edit Button */
+.admin-container .cancel-edit-btn {
+    background-color: #adb5bd;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.admin-container .cancel-edit-btn:hover {
+    background-color: #868e96;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.admin-container .cancel-edit-btn:disabled {
+    background-color: #ced4da;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Table in Edit Mode */
+.admin-container .details-table.edit-mode td {
+    position: relative;
+    padding: 4px;
+}
+
+/* Editable Inputs */
+.admin-container .editable-input {
+    width: 80%;
+    padding: 6px;
+    border: 1px solid #4dabf7;
+    border-radius: 3px;
+    font-size: 13px;
+    background-color: #e7f5ff;
+    transition: all 0.2s;
+}
+
+.editable-input[readonly] {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-color: #999;
+    color: #666;
+    position: relative;
+}
+
+.editable-input[readonly]::after {
+    content: "🔒";
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+}
+
+/* เพิ่ม tooltip เมื่อ hover ช่อง NG_QTY */
+.ng-qty-cell {
+    position: relative;
+}
+
+.ng-qty-cell:hover::before {
+    content: "กรุณาแก้ไขค่า NG ในส่วน Detail of N.G";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    z-index: 10;
+}
+
+/* เพิ่มลูกศรชี้ลงในกล่อง tooltip */
+.ng-qty-cell:hover::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+.admin-container .editable-select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #4dabf7;
+    border-radius: 3px;
+    font-size: 13px;
+    background-color: #e7f5ff;
+    transition: all 0.2s;
+}
+
+.admin-container .editable-input:focus,
+.admin-container .editable-select:focus {
+    outline: none;
+    border-color: #339af0;
+    box-shadow: 0 0 0 2px rgba(51, 154, 240, 0.25);
+}
+
+/* Status Select Styling */
+.admin-container .editable-select.status-ok {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.admin-container .editable-select.status-error {
+    background-color: #ffebee;
+    color: #c62828;
+    border-color: #c62828;
+}
+
+/* Number inputs */
+.admin-container .editable-input[type="number"] {
+    text-align: center;
+}
+
+/* Date inputs */
+.admin-container .editable-input[type="date"] {
+    padding: 4px 6px;
+}
+
+/* Highlight changed fields */
+.admin-container .details-table.edit-mode .changed-field {
+    background-color: #fff3bf;
+    border: 1px solid #fcc419;
+}
+
+/* Visual indicator for edit mode */
+.admin-container .details-modal.editing .details-header {
+    background-color: #e7f5ff;
+    border-bottom: 2px solid #4dabf7;
+}
+
+.admin-container .details-modal.editing::before {
+    content: "โหมดแก้ไข";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4dabf7;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 4;
+}
+
+/* Responsive adjustments for edit mode */
+@media (max-width: 768px) {
+    .admin-container .edit-mode-controls {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .admin-container .edit-btn,
+    .admin-container .save-btn,
+    .admin-container .cancel-edit-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .admin-container .editable-input,
+    .admin-container .editable-select {
+        padding: 4px;
+        font-size: 12px;
+    }
+}
+
+/* ============================ adminStatusView.js ============================ */
+/* ===== สำหรับส่วนแสดงเวลาที่อัพเดตล่าสุด ===== */
+.last-refreshed-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-right: 20px;
+}
+
+.refresh-time-label {
+    color: #666;
+}
+
+.refresh-time-value {
+    font-weight: bold;
+    color: #333;
+    background-color: #f8f8f8;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.status-view-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+@media (max-width: 992px) {
+    .status-view-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .refresh-controls {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .last-refreshed-time {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+/* ===== สำหรับสไตล์ของปุ่มและสวิตช์รีเฟรช ===== */
+.refresh-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 15px;
+}
+
+.refresh-now-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.refresh-now-btn:hover {
+    background-color: #45a049;
+}
+
+.auto-refresh-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.auto-refresh-toggle .active {
+    font-weight: bold;
+    color: #2196F3;
+}
+/* ===== สำหรับสไตล์ของปุ่มและสวิตช์รีเฟรช ===== */

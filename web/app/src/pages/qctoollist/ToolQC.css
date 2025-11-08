@@ -1,0 +1,210 @@
+#record-change-tool-qc{
+    border-radius: 5px;
+    box-shadow: 2px 1px 1px 3px rgb(83, 82, 82) ;
+    background-color: yellow;
+}
+#table-qc{
+    background-color: rgb(147, 149, 151);
+    color: black;
+}
+/* #table-main{
+    background-color: rgb(184, 233, 243);
+} */
+#table-qc-search{
+    background-color: rgb(246, 247, 247);
+}
+#product-tool-list{
+    background-color: yellow;
+    
+}
+#tool-qc-search{
+    background-color: yellow;
+}
+
+#tool-qc-search-1{
+    background-color: rgb(170, 171, 174);
+}
+#delete-img{
+    background-color: rgb(239, 49, 49);
+    color: white;
+}
+#icon-mesering{
+    font-size: 2rem;
+}
+#icon-mesering-check{
+    font-size: 2rem;
+}
+#tool-production-Afterset{
+    border-radius: 5px;
+    box-shadow: 2px 1px 1px 3px rgb(83, 82, 82) ;
+    background-color: aqua;
+}
+#qc-after-set{
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    box-shadow: 1px 0px 3px rgb(83, 82, 82) ;
+}
+#tool-production-Afterset-qc{
+    border-radius: 5px;
+    padding: 5px 5px 5px 15px;
+    box-shadow: 1px 1px 2px 2px rgb(83, 82, 82) ;
+    background: rgb(252, 109, 240);
+}
+.page-link {
+    cursor: pointer;
+  }
+.targetspec {
+    background-color: #f6935a;
+    text-align: center;
+    padding: 15px 20px 15px 20px;
+  }
+.drawingspec {
+    background-color: #f6935a;
+    text-align: center;
+    padding: 15px 20px 15px 20px;
+    margin-top: 10px;
+  }
+  #record-change-tool-qcSheck{
+    background-color: rgb(252, 252, 99);
+  }
+
+  .sleeveQC{
+    font-size: 1rem;
+    color: black;
+    padding: 0px 6px 0px 6px; 
+  }
+  .sleeveQC:hover {
+    transform: translateY(-0.5px);
+    box-shadow: 0 4px 8px rgba(7, 7, 7, 0.562);
+    border-radius: 3px;
+    transition: transform 0.05s ease-in-out 0.05s, box-shadow 0.05s ease-in-out 0.05s; /* เพิ่มการเปลี่ยนแปลงที่นุ่มนวลพร้อมหน่วงเวลา */
+  }
+  .shaftQC{
+    font-size: 1rem;
+    color: black;
+    padding: 0px 6px 0px 6px; 
+  }
+  .shaftQC:hover {
+    transform: translateY(-1px);
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(7, 7, 7, 0.562);
+  }
+
+  @keyframes slide {
+    0% {
+        transform: translateX(0);
+        /* border-color: white; */
+    }
+  
+    50% {
+        transform: translateX(20px);
+        border-color: black;
+    }
+  
+    100% {
+        transform: translateX(0px);
+        /* border-color: white; */
+    }
+  }
+  
+  .walking-animation {
+    display: inline-block;
+    padding: 5px;
+    /* เพิ่ม padding เพื่อให้เห็นกรอบ */
+    /* border: 2px solid white; */
+    /* ตั้งค่าสีเริ่มต้นของกรอบ */
+    animation: slide 1s infinite;
+  }
+  .table-bordered {
+    border: 1px solid black;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid black;
+}
+
+.items-per-page-container {
+    display: flex;
+    align-items: center;
+  }
+.items-per-page-containerSearch {
+    background-color: #343a40;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    margin-left: 10px;
+    color: white;
+  }
+  
+  .items-per-page-container .form-label {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .items-per-page-container .form-select {
+    font-size: 1rem;
+  }
+
+  .items-per-page-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .form-label1.border-label {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border: 1px solid #dad9d9; /* สีกรอบ */
+    border-radius: 5px; /* มุมโค้ง */
+    margin-top: 10px;
+  }
+  .form-label.border-label {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border: 1px solid #bdbaba; /* สีกรอบ */
+    border-radius: 5px; /* มุมโค้ง */
+    margin-top: 10px;
+  }
+  #per-page-box{
+    background-color: aqua;
+  }
+  
+.pagination .previous,
+.pagination .next {
+  display: none;
+}
+.start-time-qem{
+  color: blue;
+}
+#start-time-qem-modal{
+  color: rgb(245, 245, 248);
+  font-size: 2.5rem;
+}
+
+/* ทำให้ thead ของตารางอยู่กับที่ขณะเลื่อน */
+#table-qc-search thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #343a40; /* สีพื้นหลังเดียวกับ thead ที่คุณใช้ */
+  color: white; /* สีของข้อความใน thead */
+}
+
+
+.bg-success {
+  background-color: #33cc33; /* สีเขียว */
+}
+
+.bg-danger {
+  background-color: #ff0000; /* สีแดง */
+}
+
+.bg-warning {
+  background-color: #ffff00; /* สีเหลือง */
+}
+
+.bg-orange {
+  background-color: #ff9966; /* สีส้ม */
+}

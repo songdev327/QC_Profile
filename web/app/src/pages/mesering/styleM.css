@@ -1,0 +1,41 @@
+#contourM {
+    background-color: rgb(202, 245, 137);
+    border: solid rgb(202, 245, 137);
+    box-shadow: 2px 2px 1px 2px rgb(88, 87, 87);
+    color: rgb(63, 61, 61);
+    font-weight: 700;
+}
+
+#sulfcomM {
+    background-color: rgb(185, 247, 225);
+    border: solid rgb(185, 247, 241);
+    box-shadow: 2px 2px 1px 2px rgb(88, 87, 87);
+    color: rgb(12, 12, 12);
+    font-weight: 700;
+}
+
+#roncomM {
+    background-color: rgb(232, 149, 245);
+    border: solid rgb(232, 149, 245);
+    box-shadow: 2px 2px 1px 2px rgb(88, 87, 87);
+    color: rgb(46, 44, 44);
+    font-weight: 700;
+}
+
+#talysurfM {
+    background-color: rgb(239, 154, 57);
+    border: solid rgb(239, 154, 57);
+    box-shadow: 2px 2px 1px 2px rgb(88, 87, 87);
+    color: rgb(46, 44, 44);
+    font-weight: 700;
+}
+
+#iconM {
+    font-size: 2.0rem;
+    font-weight: bold;
+}
+img{
+    width: 100% ;
+    border-radius: 10px ;
+    box-shadow: 2px 1px 5px 5px rgb(88, 87, 87);
+}

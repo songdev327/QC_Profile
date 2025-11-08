@@ -1,0 +1,154 @@
+.sidebar-dash {
+    width: 200px;
+    background-color: #333;
+    color: white;
+    height: auto; /* ✅ ปรับเป็น auto */
+    overflow-y: visible; /* ✅ หรือเอาออกเลย */
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header-dash {
+    padding: 1rem;
+    background-color: #222;
+    text-align: center;
+}
+
+.sidebar-list-dash {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-list-dash li {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-list-dash li.active {
+    background-color: #159d00;
+    font-weight: bold;
+}
+
+.sidebar-list-dash li:hover {
+    background-color: #bdffb3;
+    color: #222;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .sidebar-dash {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar-list-dash {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .sidebar-list-dash li {
+        display: inline-block;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        border-bottom: none;
+    }
+}
+
+
+
+
+.main-wrapper {
+  overflow-y: auto;     /* ✅ scroll ที่นี่ */
+  height: 100vh;        /* ✅ เต็มจอ */
+}
+
+.dashboard-container {
+  display: flex;
+  height: auto;         /* ✅ ปรับจาก 100vh เป็น auto */
+}
+
+.content {
+    flex: 1;
+    padding: 2rem 2rem;  /* top-bottom: 2rem, left-right: 1.5rem */
+}
+
+.dashboard-stats-type {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 50px;
+    margin-bottom: 20px;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+#stat-card-request-a,
+#stat-card-pass-a,
+#stat-card-inprogress-a,
+#stat-card-cancel-a,
+#stat-card-reject-a {
+    padding: 0.75rem;
+    min-width: 6rem;
+    font-size: 0.85rem;
+    transition: transform 0.2s;
+    border-radius: 5px;
+    box-shadow: 3px 3px rgb(71, 71, 71);
+}
+
+#stat-card-request-a { background-color: rgb(255, 63, 255); }
+#stat-card-pass-a    { background-color: rgb(14, 165, 0); }
+#stat-card-inprogress-a { background-color: rgb(255, 157, 44); }
+#stat-card-cancel-a  { background-color: rgb(106, 106, 106); }
+#stat-card-reject-a  { background-color: rgb(255, 9, 9); }
+
+#text-h31 {
+    font-size: 0.965rem;
+ 
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+
+#stat-card-text {
+    font-size: 1.1rem;
+}
+
+.icon-request {
+    font-size: 1.2rem;
+    vertical-align: middle;
+    margin-left: 4px;
+}
+.charts-container{
+    border-radius: 3px;
+    border: solid rgb(206, 206, 206) 1px;
+    box-shadow: 1px 1px 2px 2px rgb(177, 177, 177);
+    padding-top: 1rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-bottom: 2.0rem;
+}
+
+.centered-text {
+   text-align: center;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 1.5rem;
+   font-size: 1.3rem;
+   font-weight: 700;
+}
+
+.recharts-label-list text {
+    font-weight: bold;
+    fill: black;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+    .dashboard-stats-type {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+}

@@ -1,0 +1,5 @@
+export JAVA_HOME=/usr/lib/jvm/bellsoft-java11.i386
+export JAVA_PATH=$JAVA_HOME
+export PATH=$JAVA_PATH/jre/bin:$JAVA_PATH/bin:$PATH
+
+

@@ -1,0 +1,2 @@
+javac -cp ../../build/classes:'../../lib/*' -d ../../build/classes $@
+
