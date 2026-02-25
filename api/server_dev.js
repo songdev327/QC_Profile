@@ -1,39 +1,60 @@
+// const express = require('express')
+// var cors = require('cors')
+// const app = express()
+// const port = 3000
+// const bodyParser = require('body-parser');
+
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const http = require("http").createServer(app);
 const { Server } = require("socket.io");
-const path = require("path"); // ✅ ต้องเปิดใช้ path ด้วย
+
 
 const io = new Server(http, {
-  cors: {
-    origin: [
-      "http://10.120.123.25:3000",     // ✅ อนุญาต IP ภายนอก
-      "http://192.168.96.124:3000"     // ✅ IP Server ตัวเอง (ใช้ตอนเปิดผ่าน browser)
-    ],
-    credentials: true
-  }
+  cors: { origin: "*" },
 });
 
 io.on("connection", (socket) => {
   console.log("🟢 Client connected:", socket.id);
+
   socket.on("disconnect", () => {
     console.log("🔌 Client disconnected:", socket.id);
   });
 });
 
-app.set("socketio", io);
+app.set("socketio", io); // 💡 สำคัญมาก
 
-// ✅ CORS (อนุญาตเฉพาะ IP ที่ต้องการ)
+
 const corsOptions = {
-  origin: [
-    "http://10.120.123.25:3000",
-    "http://192.168.96.124:3000"
-  ],
+  origin: "http://localhost:3001",  // ✅ ให้ frontend เรียกได้
   credentials: true
 };
 app.use(cors(corsOptions));
+
+//---- Start ใช้สำหรับ Run Build ---------------------------------------------------
+
+// const path = require("path");
+
+//---- End ใช้สำหรับ Run Build ---------------------------------------------------
+
+// app.use(cors()); // Dev
+
+//---- Start ใช้สำหรับ Run Build ---------------------------------------------------
+
+// const corsOptions = {
+//   origin: [
+//     'http://localhost:3000',           // local dev
+//     'http://10.120.123.25:3000',       // IP ที่คุณต้องการอนุญาต
+//     'http://192.168.96.124:3000'       // ปัจจุบันที่คุณใช้
+//   ],
+//   credentials: true
+// };
+// app.use(cors(corsOptions));
+
+//---- End ใช้สำหรับ Run Build ---------------------------------------------------
 
 app.use(require("./controllers/MasterToolNumberSpecCHExcelController"));
 app.use(require("./controllers/MasterToolNumberSpecCSExcelController"));
@@ -51,10 +72,16 @@ app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
 app.use("/uploadproduction", express.static("uploadproduction"));
 
-// ✅ Serve React Build Files
-app.use(express.static(path.join(__dirname, "../web/app/build")));
 
-// ✅ Routes API
+//---- Start ใช้สำหรับ Run Build ---------------------------------------------------
+
+// app.use(express.static(path.join(__dirname, "../web/app/build")));
+
+//---- End ใช้สำหรับ Run Build ---------------------------------------------------
+
+
+
+//const PackageController = require('./controllers/PackageController');
 app.use(require('./controllers/PackageController'));
 app.use(require('./controllers/MemberController'));
 app.use(require('./controllers/ProductController'));
@@ -103,13 +130,25 @@ app.use(require('./controllers/AdminController'));
 app.use(require('./controllers/AdminSelectController'));
 app.use(require("./controllers/SleeveRWD1Controller"));
 
+// app.use(require('./controllers/LogMachineController'));
 
-// ✅ Fallback: React SPA (ทุก route ที่ไม่ตรง API → ส่ง index.html)
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../web/app/build/index.html"));
-});
+//------- Start Run Builde fallback all unmatched routes to React index.html
 
-// ✅ Start Server (ฟังบนทุก IP)
-http.listen(3000, "0.0.0.0", () => {
-  console.log("✅ Server is running on http://0.0.0.0:3000");
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../web/app/build/index.html"));
+// });
+
+// app.listen(port, '0.0.0.0', () => {
+//   console.log(`✅ Server is running on http://0.0.0.0:${port}`);
+// });
+
+//------- End Run Builde fallback all unmatched routes to React index.html
+
+// app.listen(port, () => {
+//     console.log(`Example app listening on port `, port);
+// })
+
+
+http.listen(3000, () => {
+  console.log("✅ Server is running on port 3000");
 });

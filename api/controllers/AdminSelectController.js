@@ -105,14 +105,14 @@ const Sequelize = require("sequelize");  // ✅ เพิ่มบรรทั�
 // });
 
 app.post('/getMonthlyChangeData', async (req, res) => {
-  const { machineType } = req.body;
+  const { machineType, year } = req.body;
+
   try {
     const machinePrefix = `${machineType}%`;
 
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const startOfYear = new Date(currentYear, 0, 1);
-    const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59);
+    const y = year ? parseInt(year, 10) : new Date().getFullYear();
+    const startOfYear = new Date(y, 0, 1);
+    const endOfYear = new Date(y, 11, 31, 23, 59, 59);
 
     const records = await ProductModel.findAll({
       where: {

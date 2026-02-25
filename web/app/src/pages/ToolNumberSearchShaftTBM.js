@@ -874,6 +874,81 @@ function ToolNumberSearchShaftTBM(props) {
     setFilteredProducts(filtered);
   }, [selectedMCType, products]);
 
+
+  //------- Start Add web socket 20-10-25 -------------------------------------------------
+
+  useEffect(() => {
+    const socket = config.socket;
+
+    socket.on("productUpdated", (updatedProduct) => {
+      console.log("🟡 Product updated via socket:", updatedProduct);
+
+      // ✅ อัปเดต state ตาม id ถ้าคุณใช้ list
+      setProducts((prev) =>
+        prev.map((item) => (item.id === updatedProduct.id ? updatedProduct : item))
+      );
+    });
+
+    return () => {
+      socket.off("productUpdated");
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const socket = config.socket;
+
+    // 🔌 Event การเชื่อมต่อ
+    socket.on("connect", () => console.log("✅ Connected to socket:", socket.id));
+    socket.on("disconnect", () => console.log("❌ Disconnected from socket"));
+
+    // 🆕 รับข้อมูลเมื่อมีการเพิ่มรายการใหม่
+    socket.on("productAdded", (newProduct) => {
+      // console.log("🆕 New product:", newProduct);
+      setProducts((prev) => [newProduct, ...prev]);
+      // setTotalItems((prev) => prev + 1);
+
+      if (
+        selectedMCType === "" ||
+        newProduct.machine.startsWith(selectedMCType)
+      ) {
+        setFilteredProducts((prev) => [newProduct, ...prev]);
+      }
+    });
+
+    // 🔄 รับข้อมูลเมื่อมีการแก้ไขรายการ (Contour, Sulfcom)
+    socket.on("productUpdated", (updatedProduct) => {
+      // console.log("🔄 Product updated:", updatedProduct);
+      setProducts((prev) =>
+        prev.map((item) =>
+          item.id === updatedProduct.id ? updatedProduct : item
+        )
+      );
+      if (
+        selectedMCType === "" ||
+        updatedProduct.machine.startsWith(selectedMCType)
+      ) {
+        setFilteredProducts((prev) =>
+          prev.map((item) =>
+            item.id === updatedProduct.id ? updatedProduct : item
+          )
+        );
+      }
+    });
+
+    return () => {
+      // ✅ ล้าง event ทั้งหมดตอน unmount
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("productAdded");
+      socket.off("productUpdated");
+    };
+  }, [selectedMCType]);
+
+
+  //------- End Add web socket 20-10-25  ------------------------------------------------------------
+
+
   //------------------- Auto Tool -----------------------------------------------------------------------------
 
   useEffect(() => {
@@ -1885,37 +1960,39 @@ function ToolNumberSearchShaftTBM(props) {
   );
   // true ถ้าไม่มีสเปกเลย
   const noSpec = !hasAnySpec;
-  const SaveNameQCLine_To_Qc_Eqm = async (e) => {
-    e.preventDefault();
-    try {
-      let url = config.api_path + "/product/insert";
-      if (product.id !== undefined) {
-        url = config.api_path + "/product/update";
-      }
-      let payload = {
-        ...product,
-        name_qc_by_off: nameQcCheck,
-        end_time_qc_by_off: end_time_qc_line || end_time_qc_lineAuto,
-        qcline_status_detail: "Pass",
-      };
-      await axios.post(url, payload, config.headers()).then((res) => {
-        if (res.data.message === "success") {
-          Swal.fire({
-            title: "บันทึกข้อมูล",
-            text: "บันทึก QC BY OFF แล้ว",
-            icon: "success",
-          });
-          window.location.reload();
-        }
-      });
-    } catch (e) {
+ const SaveNameQCLine_To_Qc_Eqm = async (e) => {
+  e.preventDefault();
+  try {
+
+    // 🔥 ใช้ UPDATE อย่างเดียว
+    const url = config.api_path + "/product/updateToQcEqm";
+
+    let payload = {
+      ...product,
+      name_qc_by_off: nameQcCheck,
+      end_time_qc_by_off: end_time_qc_line || end_time_qc_lineAuto,
+      qcline_status_detail: "Pass",
+    };
+
+    const res = await axios.put(url, payload, config.headers());
+
+    if (res.data.message === "success") {
       Swal.fire({
-        title: "error",
-        text: e.message,
-        icon: "error",
+        title: "บันทึกข้อมูล",
+        text: "บันทึก QC BY OFF แล้ว",
+        icon: "success",
       });
+      window.location.reload();
     }
-  };
+
+  } catch (e) {
+    Swal.fire({
+      title: "error",
+      text: e.message,
+      icon: "error",
+    });
+  }
+};
 
 
   const handleQclineStatusChange = (e) => {
@@ -2375,7 +2452,9 @@ function ToolNumberSearchShaftTBM(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.contour} <br />
+                  {/* {item.contour} <br /> */}
+                  {item.contour ? item.contour : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.contour === "NG(Drawing)" && (
                     <>
@@ -2407,7 +2486,9 @@ function ToolNumberSearchShaftTBM(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.sulfcom} <br />
+                  {/* {item.sulfcom} <br /> */}
+                  {item.sulfcom ? item.sulfcom : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.sulfcom === "NG(Drawing)" && (
                     <>
@@ -2438,7 +2519,9 @@ function ToolNumberSearchShaftTBM(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.roncom} <br />
+                  {/* {item.roncom} <br /> */}
+                  {item.roncom ? item.roncom : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.roncom === "NG(Drawing)" && (
                     <>
@@ -2470,7 +2553,9 @@ function ToolNumberSearchShaftTBM(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.talysurf} <br />
+                  {/* {item.talysurf} <br /> */}
+                  {item.talysurf ? item.talysurf : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.talysurf === "NG(Drawing)" && (
                     <>

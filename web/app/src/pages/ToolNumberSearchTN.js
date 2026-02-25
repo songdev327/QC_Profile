@@ -9,7 +9,9 @@ import Swal from "sweetalert2";
 import Modal from "./components/Modal";
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+
+//import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+
 import ModalProjector from "./components/ModalProjector";
 import ModalQCInprocessShaft from "./components/ModalQCInprocessShaft";
 import ModalQCInspection from "./components/ModalQCInspection"
@@ -90,16 +92,16 @@ function ToolNumberSearchTN(props) {
   const [date_qc_by_off, setDate_qc_by_off] = useState("");
   const [time_qc_by_off, setTime_qc_by_off] = useState("");
 
-  // const [contour_ng_tool_no, setContour_ng_tool_no] = useState("");
-  // const [contour_ng_detail, setContour_ng_detail] = useState("");
-  // const [sulfcom_ng_tool_no, setSulfcom_ng_tool_no] = useState("");
-  // const [sulfcom_ng_detail, setSulf_ng_detail] = useState("");
-  // const [roncom_ng_tool_no, setRoncom_ng_tool_no] = useState("");
-  // const [roncom_ng_detail, setRon_ng_detail] = useState("");
-  // const [talysurf_ng_tool_no, setTalysurf_ng_tool_no] = useState("");
-  // const [talysurf_ng_detail, setTalysurf_ng_detail] = useState("");
-  // const [projector_type, setProjector_type] = useState("Projector");
-  // const [projector_status, setProjector_status] = useState("");
+  const [contour_ng_tool_no, setContour_ng_tool_no] = useState("");
+  const [contour_ng_detail, setContour_ng_detail] = useState("");
+  const [sulfcom_ng_tool_no, setSulfcom_ng_tool_no] = useState("");
+  const [sulfcom_ng_detail, setSulf_ng_detail] = useState("");
+  const [roncom_ng_tool_no, setRoncom_ng_tool_no] = useState("");
+  const [roncom_ng_detail, setRon_ng_detail] = useState("");
+  const [talysurf_ng_tool_no, setTalysurf_ng_tool_no] = useState("");
+  const [talysurf_ng_detail, setTalysurf_ng_detail] = useState("");
+  const [projector_type, setProjector_type] = useState("Projector");
+  const [projector_status, setProjector_status] = useState("");
 
 
   const [name_qc_projector_check, setName_qc_projector_check] = useState("");
@@ -138,7 +140,6 @@ function ToolNumberSearchTN(props) {
 
   const [getNameTn, setGetNameTn] = useState([]);
   const [showSaveButton, setShowSaveButton] = useState(false); // ✅ state สำหรับควบคุมปุ่ม
-
 
 
   const navigate = useNavigate();
@@ -708,6 +709,7 @@ function ToolNumberSearchTN(props) {
     }
   };
 
+
  const handleSaveCancelRecord = async (e) => {
   e.preventDefault();
 
@@ -754,30 +756,24 @@ function ToolNumberSearchTN(props) {
   
 };
 
-  const handleSaveNewPartSetUp = async (e) => {
+   const handleSaveNewPartSetUp = async (e) => {
     e.preventDefault();
-    if (document.getElementById("changeInputNewPartSetup").value === "") {
-      Swal.fire({
-        title: "กรุณากรอกข้อมูล",
-        text: "กรุณากรอกข้อมูล Part set up",
-        icon: "warning",
-      });
-      return;
-    }
-    try {
-      let url = config.api_path + "/product/insert";
 
-      if (product.id !== undefined) {
-        url = config.api_path + "/product/update";
-      }
-      await axios.post(url, product, config.headers()).then((res) => {
+    try {
+      const url = config.api_path + "/product/updatePartSetUpTn";
+      const payload = {
+        ...product,
+        part_set_up: product.part_set_up,
+
+      };
+      await axios.put(url, payload, config.headers()).then((res) => {
         if (res.data.message === "success") {
           Swal.fire({
             title: "บันทึกข้อมูล",
             text: "บันทึก Part set up แล้ว",
             icon: "success",
+            timer: 1000,
           });
-          window.location.reload();
         }
       });
     } catch (e) {
@@ -849,6 +845,80 @@ function ToolNumberSearchTN(props) {
     });
     setFilteredProducts(filtered);
   }, [selectedMCType, products]);
+
+
+  //------- Start Add web socket 20-10-25 -------------------------------------------------
+  
+  useEffect(() => {
+    const socket = config.socket;
+  
+    socket.on("productUpdated", (updatedProduct) => {
+      console.log("🟡 Product updated via socket:", updatedProduct);
+  
+      // ✅ อัปเดต state ตาม id ถ้าคุณใช้ list
+      setProducts((prev) =>
+        prev.map((item) => (item.id === updatedProduct.id ? updatedProduct : item))
+      );
+    });
+  
+    return () => {
+      socket.off("productUpdated");
+    };
+  }, []);
+  
+  
+   useEffect(() => {
+    const socket = config.socket;
+  
+    // 🔌 Event การเชื่อมต่อ
+    socket.on("connect", () => console.log("✅ Connected to socket:", socket.id));
+    socket.on("disconnect", () => console.log("❌ Disconnected from socket"));
+  
+    // 🆕 รับข้อมูลเมื่อมีการเพิ่มรายการใหม่
+    socket.on("productAdded", (newProduct) => {
+      // console.log("🆕 New product:", newProduct);
+      setProducts((prev) => [newProduct, ...prev]);
+      // setTotalItems((prev) => prev + 1);
+  
+      if (
+        selectedMCType === "" ||
+        newProduct.machine.startsWith(selectedMCType)
+      ) {
+        setFilteredProducts((prev) => [newProduct, ...prev]);
+      }
+    });
+  
+    // 🔄 รับข้อมูลเมื่อมีการแก้ไขรายการ (Contour, Sulfcom)
+    socket.on("productUpdated", (updatedProduct) => {
+      // console.log("🔄 Product updated:", updatedProduct);
+      setProducts((prev) =>
+        prev.map((item) =>
+          item.id === updatedProduct.id ? updatedProduct : item
+        )
+      );
+      if (
+        selectedMCType === "" ||
+        updatedProduct.machine.startsWith(selectedMCType)
+      ) {
+        setFilteredProducts((prev) =>
+          prev.map((item) =>
+            item.id === updatedProduct.id ? updatedProduct : item
+          )
+        );
+      }
+    });
+  
+    return () => {
+      // ✅ ล้าง event ทั้งหมดตอน unmount
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("productAdded");
+      socket.off("productUpdated");
+    };
+  }, [selectedMCType]);
+  
+  
+  //------- End Add web socket 20-10-25  ------------------------------------------------------------
 
 
 
@@ -2605,7 +2675,12 @@ function ToolNumberSearchTN(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.contour} <br />
+                  {/* {item.contour} <br /> */}
+
+                  {/* ✅ แสดงค่า ถ้าไม่มีข้อมูลให้แสดง N/A */}
+                  {item.contour ? item.contour : 'N/A'} <br />
+
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.contour === "NG(Drawing)" && (
                     <>
@@ -2637,7 +2712,11 @@ function ToolNumberSearchTN(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.sulfcom} <br />
+                  {/* {item.sulfcom} <br /> */}
+                  {/* ✅ แสดงค่า ถ้าไม่มีข้อมูลให้แสดง N/A */}
+                  {item.sulfcom ? item.sulfcom : 'N/A'} <br />
+
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.sulfcom === "NG(Drawing)" && (
                     <>
@@ -2668,7 +2747,12 @@ function ToolNumberSearchTN(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.roncom} <br />
+                  {/* {item.roncom} <br /> */}
+
+                  {/* ✅ แสดงค่า ถ้าไม่มีข้อมูลให้แสดง N/A */}
+                  {item.roncom ? item.roncom : 'N/A'} <br />
+
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.roncom === "NG(Drawing)" && (
                     <>
@@ -2700,7 +2784,10 @@ function ToolNumberSearchTN(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.talysurf} <br />
+                  {/* {item.talysurf} <br /> */}
+                  {item.talysurf ? item.talysurf : 'N/A'} <br />
+
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.talysurf === "NG(Drawing)" && (
                     <>
@@ -3458,10 +3545,16 @@ function ToolNumberSearchTN(props) {
             </div>
             <div className="col-2 mt-1">
               <div className="text-bold" id="box">
-                Part set up :
+                Part set up : {product.part_set_up}
               </div>
               <input
                 value={product.part_set_up}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    part_set_up: e.target.value,
+                  })
+                }
                 className="form-control text-primary pr-1"
               />
             </div>
@@ -3474,9 +3567,9 @@ function ToolNumberSearchTN(props) {
             <div className="col-12 mt-2">
               <button
                 className="btn btn-primary ml-1 mb-3"
-                id="addPartSetUp"
                 type="button"
-                onClick={openModalAddPartSetUp}
+                // onClick={openModalAddPartSetUp}
+                onClick={handleSaveNewPartSetUp}
               >
                 + part set up
               </button>

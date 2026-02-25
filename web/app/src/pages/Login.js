@@ -78,7 +78,7 @@ function Login() {
 
   return (
     <>
-     <div className="signup_container d-flex justify-content-center mt-5">
+      <div className="signup_container d-flex justify-content-center mt-5">
         <div className="signup_form w-50">
           <div className="card card-outline card-primary">
             <div className="h1 card-header text-center txet-bold mg-3" id="login">
@@ -89,44 +89,42 @@ function Login() {
               <div className="card-body">
                 <div>
                   <label>PROCESS</label>
-                  <input
+                  <select
+                    value={process || ""}
                     onChange={(e) => setProcess(e.target.value)}
-                    type="text"
-                    list="data2"
                     className="form-control mr-5"
-                    placeholder="Process..."
-                  />
-                  <datalist id="data2">
-                    <option>Production</option>
-                    <option>QC Equipment</option>
-                  </datalist>
+                  >
+                    <option value="">-- Select Process --</option>
+                    <option value="Production">Production</option>
+                    <option value="QC Equipment">QC Equipment</option>
+                  </select>
                 </div>
 
                 <div className="mt-3">
-                    <label>PASSWORD</label>
-                    <div className="input-group">
-                      <input
-                        onChange={(e) => setPassword(e.target.value)}
-                        type={showPassword ? "text" : "password"}
-                        className="form-control"
-                        placeholder="password......."
-                      />
-                      <div className="input-group-append"> 
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary fw-bold"
-                          onClick={togglePasswordVisibility}
-                        >
-                          {showPassword ? <FaEyeSlash /> : <FaEye />}
-                        </button>
-                      </div>
+                  <label>PASSWORD</label>
+                  <div className="input-group">
+                    <input
+                      onChange={(e) => setPassword(e.target.value)}
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="password......."
+                    />
+                    <div className="input-group-append">
+                      <button
+                        type="button"
+                        className="btn btn-outline-primary fw-bold"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      </button>
                     </div>
                   </div>
+                </div>
                 <div className="row">
                   <div className="col-12 mt-3">
                     <button type="submit" className="col-6 btn btn-primary bg-primary text-white">
                       SING IN
-                      <LoginIcon className="ml-2"/>
+                      <LoginIcon className="ml-2" />
                     </button>
                   </div>
                 </div>

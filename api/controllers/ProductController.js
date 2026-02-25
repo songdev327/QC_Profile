@@ -6,6 +6,14 @@ const dayjs = require("dayjs");
 const ProductImageModel = require('../models/ProductImageModel');
 const ProductInputSpecModel = require('../models/ProductInputSpecModel');
 
+// ⭐ ใส่ไว้บนสุดของไฟล์
+function cleanUndefined(obj) {
+  Object.keys(obj).forEach(key => {
+    if (obj[key] === undefined) delete obj[key];
+  });
+  return obj;
+}
+
 
 app.post("/product/insert", Service.isLogin, async (req, res) => {
   try {
@@ -153,11 +161,12 @@ app.put("/product/updateToolAutoDetail", Service.isLogin, async (req, res) => {
       end_time_qc_by_off: payload.end_time_qc_by_off || null,
     };
 
-    // ✅ รองรับการอัปเดตคอลัมน์ qcline_status_detail (ถ้าส่งมา)
+    // รองรับการอัปเดต qcline_status_detail (ถ้ามีส่งมา)
     if (typeof payload.qcline_status_detail !== "undefined") {
       fieldsToUpdate.qcline_status_detail = payload.qcline_status_detail;
     }
 
+    // 🔧 อัปเดตข้อมูลใน DB
     const [updated] = await ProductModel.update(fieldsToUpdate, {
       where: { id: payload.productId },
     });
@@ -166,12 +175,24 @@ app.put("/product/updateToolAutoDetail", Service.isLogin, async (req, res) => {
       return res.status(404).send({ message: "Product not found or no changes made" });
     }
 
-    res.send({ message: "Product updated successfully", result: payload });
+    // ⭐ ดึงข้อมูลล่าสุดหลังการอัปเดต
+    const updatedData = await ProductModel.findByPk(payload.productId, {
+      include: [{ all: true }]
+    });
+
+    // ⭐ ยิง socket event ไปยัง client ทุกเครื่อง
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    // ⭐ ส่งข้อมูลกลับไปยังผู้เรียก API
+    res.send({ message: "Product updated successfully", result: updatedData });
+
   } catch (e) {
-    console.error("Error while updating product:", e);
+    console.error("❌ Error while updating product:", e);
     res.status(500).send({ message: e.message });
   }
 });
+
 
 app.put("/product/updateToolAutoSleeve", Service.isLogin, async (req, res) => {
   try {
@@ -182,13 +203,11 @@ app.put("/product/updateToolAutoSleeve", Service.isLogin, async (req, res) => {
       return res.status(400).send({ message: "productId is required" });
     }
 
-    // console.log("Received Payload for update:", payload); // บันทึก Payload ที่ได้รับ
-
     // อัปเดตข้อมูลใน ProductModel โดยใช้ productId
     const [updated] = await ProductModel.update(
       {
         name_qc_by_off: payload.name_qc_by_off,
-        end_time_qc_by_off: payload.end_time_qc_by_off || null, // แปลงค่าว่างเป็น null
+        end_time_qc_by_off: payload.end_time_qc_by_off || null,
       },
       {
         where: { id: payload.productId },
@@ -199,12 +218,24 @@ app.put("/product/updateToolAutoSleeve", Service.isLogin, async (req, res) => {
       return res.status(404).send({ message: "Product not found or no changes made" });
     }
 
-    res.send({ message: "Product updated successfully", result: payload });
+    // ⭐ โหลดข้อมูลล่าสุดหลังอัปเดต
+    const updatedData = await ProductModel.findByPk(payload.productId, {
+      include: [{ all: true }]
+    });
+
+    // ⭐ ส่ง socket event แจ้ง client ทุกเครื่อง
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    // ตอบกลับไปยัง client ที่เรียก API
+    res.send({ message: "Product updated successfully", result: updatedData });
+
   } catch (e) {
-    console.error("Error while updating product:", e);
+    console.error("❌ Error while updating product:", e);
     res.status(500).send({ message: e.message });
   }
 });
+
 
 app.put("/productTN/TNupdateToolAutoSleeve", Service.isLogin, async (req, res) => {
   try {
@@ -215,17 +246,14 @@ app.put("/productTN/TNupdateToolAutoSleeve", Service.isLogin, async (req, res) =
       return res.status(400).send({ message: "productId is required" });
     }
 
-    // ตรวจสอบค่าของ qcline_status_detail และเพิ่มไปใน payload
     const { qcline_status_detail } = payload;
 
-    // console.log("Received Payload for update:", payload); // บันทึก Payload ที่ได้รับ
-
-    // อัปเดตข้อมูลใน ProductModel โดยใช้ productId
+    // 🔧 อัปเดตข้อมูลตาม payload
     const [updated] = await ProductModel.update(
       {
         name_qc_by_off: payload.name_qc_by_off,
-        end_time_qc_by_off: payload.end_time_qc_by_off || null, // แปลงค่าว่างเป็น null
-        qcline_status_detail: qcline_status_detail || null, // เพิ่มการอัปเดต qcline_status_detail
+        end_time_qc_by_off: payload.end_time_qc_by_off || null,
+        qcline_status_detail: qcline_status_detail || null,
       },
       {
         where: { id: payload.productId },
@@ -236,9 +264,20 @@ app.put("/productTN/TNupdateToolAutoSleeve", Service.isLogin, async (req, res) =
       return res.status(404).send({ message: "Product not found or no changes made" });
     }
 
-    res.send({ message: "Product updated successfully", result: payload });
+    // ⭐ โหลดข้อมูลล่าสุดหลังอัปเดต
+    const updatedData = await ProductModel.findByPk(payload.productId, {
+      include: [{ all: true }]
+    });
+
+    // ⭐ ส่ง socket event แจ้งทุก Client
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    // ⭐ ส่งตอบกลับให้ client ที่เรียก API
+    res.send({ message: "Product updated successfully", result: updatedData });
+
   } catch (e) {
-    console.error("Error while updating product:", e);
+    console.error("❌ Error while updating TN tool auto sleeve:", e);
     res.status(500).send({ message: e.message });
   }
 });
@@ -253,15 +292,13 @@ app.put("/product/updateToolAutoSleeveQCLineOnly", Service.isLogin, async (req, 
       return res.status(400).send({ message: "productId is required" });
     }
 
-    // console.log("Received Payload for update:", payload); // บันทึก Payload ที่ได้รับ
-
     // อัปเดตข้อมูลใน ProductModel โดยใช้ productId
     const [updated] = await ProductModel.update(
       {
         name_qc_by_off: payload.name_qc_by_off,
-        end_time_qc_by_off: payload.end_time_qc_by_off || null, // แปลงค่าว่างเป็น null
-        qcline_status: payload.qcline_status || null, // เพิ่ม qcline_status ที่จะอัปเดตในฐานข้อมูล
-        barcode: payload.barcode, // รับค่า barcode มาอัปเดต
+        end_time_qc_by_off: payload.end_time_qc_by_off || null,   // ค่าว่างเป็น null
+        qcline_status: payload.qcline_status || null,              // update QC line status
+        barcode: payload.barcode,                                  // update barcode
       },
       {
         where: { id: payload.productId },
@@ -272,12 +309,24 @@ app.put("/product/updateToolAutoSleeveQCLineOnly", Service.isLogin, async (req, 
       return res.status(404).send({ message: "Product not found or no changes made" });
     }
 
-    res.send({ message: "Product updated successfully", result: payload });
+    // ⭐ โหลดข้อมูลล่าสุดหลัง update
+    const updatedData = await ProductModel.findByPk(payload.productId, {
+      include: [{ all: true }]
+    });
+
+    // ⭐ ยิง event socketio เพื่อให้ทุก client อัปเดตข้อมูลทันที
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    // ⭐ ส่งข้อมูลกลับให้ client ที่เรียก API
+    res.send({ message: "Product updated successfully", result: updatedData });
+
   } catch (e) {
-    console.error("Error while updating product:", e);
+    console.error("❌ Error while updating product QCLineOnly:", e);
     res.status(500).send({ message: e.message });
   }
 });
+
 
 
 app.put("/product/updateProductInputSpec", async (req, res) => {
@@ -414,6 +463,8 @@ app.put("/product/updateProductInputSpecSleeve", async (req, res) => {
     res.status(500).send({ message: e.message });
   }
 });
+
+
 
 
 app.get('/product/list', Service.isLogin, async (req, res) => {
@@ -1140,6 +1191,7 @@ app.get('/product2TB/listMachineQCShaftTB', Service.isLogin, async (req, res) =>
 });
 
 
+
 app.post("/product/update", Service.isLogin, async (req, res) => {
   try {
     let payload = req.body;
@@ -1154,6 +1206,58 @@ app.post("/product/update", Service.isLogin, async (req, res) => {
   } catch (e) {
     res.statusCode = 500;
     res.send({ message: e.message });
+  }
+});
+
+app.put("/product/updatePartSetUpTn", Service.isLogin, async (req, res) => {
+  try {
+    const { id, part_set_up } = req.body;
+
+    if (!id) {
+      return res.status(400).send({ message: "Missing id" });
+    }
+
+    // ✅ อัปเดตเฉพาะ field ที่ต้องการ
+    await ProductModel.update(
+      { part_set_up },
+      { where: { id } }
+    );
+
+    // 🔎 โหลดข้อมูลล่าสุดหลังอัปเดต
+    const updatedData = await ProductModel.findByPk(id, { include: [{ all: true }] });
+
+    // 📡 ส่ง event ผ่าน socketio
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData); // จะใช้ชื่อ event เดียวกันก็ได้
+    // หรือแยก event เฉพาะ: io.emit("afterSetUpdated", updatedData);
+
+    res.send({ message: "success", data: updatedData });
+  } catch (e) {
+    console.error("❌ Error updateAPartSetUp:", e);
+    res.status(500).send({ message: e.message });
+  }
+});
+
+app.put("/product/updatePassEqm", Service.isLogin, async (req, res) => {
+  try {
+    const id = req.body.id;
+    const payload = req.body;
+
+    // อัปเดตข้อมูล
+    await ProductModel.update(payload, { where: { id } });
+
+    // 🔎 โหลดข้อมูลล่าสุดหลังอัปเดต
+    const updatedData = await ProductModel.findByPk(id, { include: [{ all: true }] });
+
+    // 📡 ส่ง event ผ่าน socketio
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    res.send({ message: "success", data: updatedData });
+
+  } catch (e) {
+    console.error("❌ Error updatePassEqm:", e);
+    res.status(500).send({ message: e.message });
   }
 });
 
@@ -1180,6 +1284,42 @@ app.post("/product/updateTimeEQM", Service.isLogin, async (req, res) => {
   }
 });
 
+app.put("/product/updateToQcEqm", Service.isLogin, async (req, res) => {
+  try {
+    let payload = req.body;
+
+    if (!payload.id) {
+      return res.status(400).send({ message: "Missing id for update" });
+    }
+
+    // 🔧 อัปเดตข้อมูล
+    const [updated] = await ProductModel.update(payload, {
+      where: { id: payload.id },
+    });
+
+    if (!updated) {
+      return res.status(404).send({ message: "No record updated or record not found" });
+    }
+
+    // ⭐ โหลดข้อมูลล่าสุดหลังอัปเดต
+    const updatedData = await ProductModel.findByPk(payload.id, {
+      include: [{ all: true }]
+    });
+
+    // ⭐ ยิง socket event ให้ทุก client อัปเดตทันที
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    // ⭐ ตอบกลับให้ client
+    res.send({ message: "success", data: updatedData });
+
+  } catch (e) {
+    console.error("❌ Error updating product:", e);
+    res.status(500).send({ message: e.message });
+  }
+});
+
+
 
 app.post("/product/updateAF", Service.isLogin, async (req, res) => {
   try {
@@ -1199,20 +1339,35 @@ app.post("/product/updateAF", Service.isLogin, async (req, res) => {
 });
 
 app.put("/product/updateCancel/:id", Service.isLogin, async (req, res) => {
-  try {
+   try {
     const id = req.params.id;
     const payload = req.body;
 
+    // ⭐ อัปเดตข้อมูลตาม payload
     const [affectedCancel] = await ProductModel.update(payload, {
       where: { id },
     });
 
     if (affectedCancel > 0) {
-      res.send({ message: "success" });
+
+      // ⭐ โหลดข้อมูลล่าสุดหลังการอัปเดต
+      const updatedData = await ProductModel.findByPk(id, {
+        include: [{ all: true }]
+      });
+
+      // ⭐ ยิง socket event ไปที่ client ทุกคน
+      const io = req.app.get("socketio");
+      io.emit("productUpdated", updatedData);
+
+      // ⭐ ส่งกลับให้ frontend ที่เรียก API
+      res.send({ message: "success", data: updatedData });
+
     } else {
       res.status(404).send({ message: "ไม่พบรายการที่ต้องการอัปเดต" });
     }
+
   } catch (e) {
+    console.error("❌ Error updateCancel:", e);
     res.status(500).send({ message: e.message });
   }
 });
@@ -1221,199 +1376,247 @@ app.put("/product/updateReject/:id", Service.isLogin, async (req, res) => {
     const id = req.params.id;
     const payload = req.body;
 
+    // ⭐ อัปเดตข้อมูลตาม payload
     const [affectedCancel] = await ProductModel.update(payload, {
       where: { id },
     });
 
     if (affectedCancel > 0) {
-      res.send({ message: "success" });
+
+      // ⭐ โหลดข้อมูลล่าสุดหลังการอัปเดต
+      const updatedData = await ProductModel.findByPk(id, {
+        include: [{ all: true }]
+      });
+
+      // ⭐ ยิง socket event ไปที่ client ทุกคน
+      const io = req.app.get("socketio");
+      io.emit("productUpdated", updatedData);
+
+      // ⭐ ส่งกลับให้ frontend ที่เรียก API
+      res.send({ message: "success", data: updatedData });
+
     } else {
       res.status(404).send({ message: "ไม่พบรายการที่ต้องการอัปเดต" });
     }
+
   } catch (e) {
+    console.error("❌ Error updateReject:", e);
     res.status(500).send({ message: e.message });
   }
 });
 
+
+
+// app.put("/product/updateDetailNg/:id", Service.isLogin, async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const {
+//       contour,
+//       contour_ng_target_spec,
+//       contour_ng_drawing_spec,
+//       contour_over_target,
+//       contour_under_target,
+//     } = req.body;
+
+//     // ✅ อนุญาตให้แก้เฉพาะฟิลด์ของ Contour
+//     let updateData = { contour };
+
+//     if (contour === "NG(Drawing)") {
+//       updateData.contour_ng_target_spec   = contour_ng_target_spec || null;
+//       updateData.contour_ng_drawing_spec  = contour_ng_drawing_spec || null;
+
+//     } else if (contour === "Over target") {
+//       updateData.contour_over_target      = contour_over_target || null;
+
+//     } else if (contour === "Under target") {
+//       updateData.contour_under_target     = contour_under_target || null;
+
+//     } else {
+
+//     }
+
+//     const [affected] = await ProductModel.update(updateData, { where: { id } });
+
+//     if (affected > 0) {
+//       const updatedData = await ProductModel.findByPk(id, { include: [{ all: true }] });
+
+//       // const io = req.app.get("socketio");
+//       // io.emit("productUpdated", updatedData);
+      
+//       res.send({ message: "success", data: updatedData });
+//     } else {
+//       res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
+//     }
+//   } catch (e) {
+//     console.error("❌ Error updating contour:", e);
+//     res.status(500).send({ message: e.message });
+//   }
+// });
 
 app.put("/product/updateDetailNg/:id", Service.isLogin, async (req, res) => {
   try {
     const id = req.params.id;
-    const payload = req.body;
+    const contour = req.body.contour;
 
-    // ✅ สร้างสำเนาข้อมูลที่ต้องการอัปเดต
-    let updateData = { ...payload };
+    // ⭐ เพิ่มฟิลด์เฉพาะที่ผู้ใช้เลือก
+    let updateData = { contour };
 
-    // ✅ ล้างค่าที่ไม่จำเป็น ถ้า contour ไม่ใช่ NG / Over / Under
-    if (
-      payload.contour !== "NG(Drawing)" &&
-      payload.contour !== "Over target" &&
-      payload.contour !== "Under target"
-    ) {
-      delete updateData.contour_ng_target_spec;
-      delete updateData.contour_ng_drawing_spec;
-      delete updateData.contour_over_target;
-      delete updateData.contour_under_target;
+    if (contour === "NG(Drawing)") {
+      updateData.contour_ng_target_spec  = req.body.contour_ng_target_spec || null;
+      updateData.contour_ng_drawing_spec = req.body.contour_ng_drawing_spec || null;
+
+    } else if (contour === "Over target") {
+      updateData.contour_over_target = req.body.contour_over_target || null;
+
+    } else if (contour === "Under target") {
+      updateData.contour_under_target = req.body.contour_under_target || null;
     }
 
-    // ✅ อัปเดตข้อมูลในฐานข้อมูล
+    // ⭐ ลบ undefined เพื่อไม่ให้ค่าอื่นถูกล้าง
+    updateData = cleanUndefined(updateData);
+
     const [affected] = await ProductModel.update(updateData, { where: { id } });
 
-    if (affected > 0) {
-      // ✅ ดึงข้อมูลล่าสุดหลังอัปเดต
-      const updatedData = await ProductModel.findByPk(id, {
-        include: [{ all: true }],
-      });
-
-      // ✅ ส่ง event real-time ไป frontend ทุกเครื่อง
-      const io = req.app.get("socketio");
-      io.emit("productUpdated", updatedData);
-
-      // console.log("✅ Emit productUpdated:", updatedData.id);
-
-      res.send({ message: "success", data: updatedData });
-    } else {
-      res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
+      if (!affected) {
+      return res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
     }
+
+
+    const updatedData = await ProductModel.findByPk(id, { include: [{ all: true }] });
+
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    res.send({ message: "success", data: updatedData });
+
   } catch (e) {
-    console.error("❌ Error updating product:", e);
     res.status(500).send({ message: e.message });
   }
 });
+
 
 app.put("/product/updateDetailNgSulfcom/:id", Service.isLogin, async (req, res) => {
-
   try {
     const id = req.params.id;
-    const payload = req.body;
+    const sulfcom = req.body.sulfcom;
 
-    // ✅ สร้างสำเนาข้อมูลที่ต้องการอัปเดต
-    let updateDataSulfcom = { ...payload };
+    let updateData = { sulfcom };
 
-    // ✅ ล้างค่าที่ไม่จำเป็น ถ้า sulfcom ไม่ใช่ NG / Over / Under
-    if (
-      payload.sulfcom !== "NG(Drawing)" &&
-      payload.sulfcom !== "Over target" &&
-      payload.sulfcom !== "Under target"
-    ) {
-      delete updateDataSulfcom.sulfcom_ng_target_spec;
-      delete updateDataSulfcom.sulfcom_ng_drawing_spec;
-      delete updateDataSulfcom.sulfcom_over_target;
-      delete updateDataSulfcom.sulfcom_under_target;
+    if (sulfcom === "NG(Drawing)") {
+      updateData.sulfcom_ng_target_spec  = req.body.sulfcom_ng_target_spec || null;
+      updateData.sulfcom_ng_drawing_spec = req.body.sulfcom_ng_drawing_spec || null;
+
+    } else if (sulfcom === "Over target") {
+      updateData.sulfcom_over_target = req.body.sulfcom_over_target || null;
+
+    } else if (sulfcom === "Under target") {
+      updateData.sulfcom_under_target = req.body.sulfcom_under_target || null;
     }
 
-    // ✅ อัปเดตข้อมูลในฐานข้อมูล
-    const [affectedSulfcom] = await ProductModel.update(updateDataSulfcom, { where: { id } });
+    updateData = cleanUndefined(updateData);
 
-    if (affectedSulfcom > 0) {
-        // ✅ ดึงข้อมูลล่าสุดหลังอัปเดต
-      const updateDataSulfcom = await ProductModel.findByPk(id, {
-        include: [{ all: true }],
-      });
-
-      // ✅ ส่ง event real-time ไป frontend ทุกเครื่อง
-      const io = req.app.get("socketio");
-      io.emit("productUpdated", updateDataSulfcom);
+    const [affected] = await ProductModel.update(updateData, { where: { id } });
 
 
-      res.send({ message: "success", data: updateDataSulfcom });
-    } else {
-      res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
+
+      if (!affected) {
+      return res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
     }
+
+    const updatedData = await ProductModel.findByPk(id, { include: [{ all: true }] });
+
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    res.send({ message: "success", data: updatedData });
+
   } catch (e) {
-    console.error("❌ Error updating product:", e);
     res.status(500).send({ message: e.message });
   }
 });
+
 
 app.put("/product/updateDetailNgRoncom/:id", Service.isLogin, async (req, res) => {
-
-   try {
+  try {
     const id = req.params.id;
-    const payload = req.body;
+    const roncom = req.body.roncom;
 
-    // ✅ สร้างสำเนาข้อมูลที่ต้องการอัปเดต
-    let updateDataRoncom = { ...payload };
+    let updateData = { roncom };
 
-    // ✅ ล้างค่าที่ไม่จำเป็น ถ้า sulfcom ไม่ใช่ NG / Over / Under
-    if (
-      payload.roncom !== "NG(Drawing)" &&
-      payload.roncom !== "Over target" &&
-      payload.roncom !== "Under target"
-    ) {
-      delete updateDataRoncom.roncom_ng_target_spec;
-      delete updateDataRoncom.roncom_ng_drawing_spec;
-      delete updateDataRoncom.roncom_over_target;
-      delete updateDataRoncom.roncom_under_target;
+    if (roncom === "NG(Drawing)") {
+      updateData.roncom_ng_target_spec  = req.body.roncom_ng_target_spec || null;
+      updateData.roncom_ng_drawing_spec = req.body.roncom_ng_drawing_spec || null;
+
+    } else if (roncom === "Over target") {
+      updateData.roncom_over_target = req.body.roncom_over_target || null;
+
+    } else if (roncom === "Under target") {
+      updateData.roncom_under_target = req.body.roncom_under_target || null;
     }
 
-    // ✅ อัปเดตข้อมูลในฐานข้อมูล
-    const [affectedRoncom] = await ProductModel.update(updateDataRoncom, { where: { id } });
+    updateData = cleanUndefined(updateData);
 
-    if (affectedRoncom > 0) {
-      // ✅ ดึงข้อมูลล่าสุดหลังอัปเดต
-      const affectedRoncom = await ProductModel.findByPk(id, {
-        include: [{ all: true }],
-      });
+    const [affected] = await ProductModel.update(updateData, { where: { id } });
 
-      // ✅ ส่ง event real-time ไป frontend ทุกเครื่อง
-      const io = req.app.get("socketio");
-      io.emit("productUpdated", affectedRoncom);
-
-
-      res.send({ message: "success" , data: affectedRoncom });
-    } else {
-      res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
+       if (!affected) {
+      return res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
     }
+
+
+    const updatedData = await ProductModel.findByPk(id, { include: [{ all: true }] });
+
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    res.send({ message: "success", data: updatedData });
+
   } catch (e) {
-    console.error("❌ Error updating product:", e);
     res.status(500).send({ message: e.message });
   }
 });
+
 
 app.put("/product/updateDetailNgTalysurf/:id", Service.isLogin, async (req, res) => {
-
-   try {
+  try {
     const id = req.params.id;
-    const payload = req.body;
+    const talysurf = req.body.talysurf;
 
-    // ✅ สร้างสำเนาข้อมูลที่ต้องการอัปเดต
-    let updateDataTalysurf = { ...payload };
+    let updateData = { talysurf };
 
-    // ✅ ล้างค่าที่ไม่จำเป็น ถ้า sulfcom ไม่ใช่ NG / Over / Under
-    if (
-      payload.talysurf !== "NG(Drawing)" &&
-      payload.talysurf !== "Over target" &&
-      payload.talysurf !== "Under target"
-    ) {
-      delete updateDataTalysurf.talysurf_ng_target_spec;
-      delete updateDataTalysurf.talysurf_ng_drawing_spec;
-      delete updateDataTalysurf.talysurf_over_target;
-      delete updateDataTalysurf.talysurf_under_target;
+    if (talysurf === "NG(Drawing)") {
+      updateData.talysurf_ng_target_spec  = req.body.talysurf_ng_target_spec || null;
+      updateData.talysurf_ng_drawing_spec = req.body.talysurf_ng_drawing_spec || null;
+
+    } else if (talysurf === "Over target") {
+      updateData.talysurf_over_target = req.body.talysurf_over_target || null;
+
+    } else if (talysurf === "Under target") {
+      updateData.talysurf_under_target = req.body.talysurf_under_target || null;
     }
 
-    // ✅ อัปเดตข้อมูลในฐานข้อมูล
-    const [affectedTalysurf] = await ProductModel.update(updateDataTalysurf, { where: { id } });
+    updateData = cleanUndefined(updateData);
 
-    if (affectedTalysurf > 0) {
-       // ✅ ดึงข้อมูลล่าสุดหลังอัปเดต
-      const affectedTalysurf = await ProductModel.findByPk(id, {
-        include: [{ all: true }],
-      });
+    const [affected] = await ProductModel.update(updateData, { where: { id } });
 
-       // ✅ ส่ง event real-time ไป frontend ทุกเครื่อง
-      const io = req.app.get("socketio");
-      io.emit("productUpdated", affectedTalysurf);
-
-      res.send({ message: "success" ,  data: affectedTalysurf });
-    } else {
-      res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
+       if (!affected) {
+      return res.status(404).send({ message: "ไม่พบข้อมูลสำหรับอัปเดต" });
     }
+
+
+    const updatedData = await ProductModel.findByPk(id, { include: [{ all: true }] });
+
+    const io = req.app.get("socketio");
+    io.emit("productUpdated", updatedData);
+
+    res.send({ message: "success", data: updatedData });
+
   } catch (e) {
-    console.error("❌ Error updating product:", e);
     res.status(500).send({ message: e.message });
   }
 });
+
+
+
 
 
 app.post("/product2TN/addProduct", async (req, res) => {
@@ -1555,6 +1758,7 @@ app.post("/product/ProductMCQC_TN", Service.isLogin, async (req, res) => {
     res.status(500).send({ message: e.message });
   }
 });
+
 app.post("/product/ProductMCQC_CH", Service.isLogin, async (req, res) => {
   try {
     const { machine, startDate, endDate } = req.body;
@@ -1584,6 +1788,7 @@ app.post("/product/ProductMCQC_CH", Service.isLogin, async (req, res) => {
     res.status(500).send({ message: e.message });
   }
 });
+
 app.post("/product/ProductMCQC_TBS", Service.isLogin, async (req, res) => {
   try {
     const { machine, startDate, endDate } = req.body;

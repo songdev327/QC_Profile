@@ -51,6 +51,8 @@ function AddMasterToolNumberSpecCS() {
   const [filteredMachineNumbers, setFilteredMachineNumbers] = useState([]); // State สำหรับเก็บเครื่องที่กรอง
 
   const [searchResult, setSearchResult] = useState(null); // สร้าง state เก็บผลลัพธ์การค้นหา
+ 
+  const [file, setFile] = useState(null);
 
   // ตัวเลือกที่จะแสดงใน Select
   const sectionOptions = [
@@ -58,6 +60,7 @@ function AddMasterToolNumberSpecCS() {
     { value: "QC Line Check", label: "QC Line Check" },
     { value: "QC In process", label: "QC In process" },
     { value: "SPC Check", label: "SPC Check" },
+    { value: "QC Equipment Check", label: "QC Equipment Check" },
   ];
   const sectionOptionsDiv = [
     { value: "PCMB", label: "PCMB" },
@@ -566,6 +569,68 @@ setMachineNumbers(filteredMachines);
     window.location.reload();
   };
 
+
+  const handleUpload = async (e) => {
+    e?.preventDefault();
+    if (!file) {
+      Swal.fire("⚠️ โปรดเลือกไฟล์ Excel ก่อน");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      Swal.fire({ title: "กำลังนำเข้า...", didOpen: () => Swal.showLoading() });
+
+      const res = await axios.post(
+        `${config.api_path}/upload-master-tool-spec-cs`,
+        formData, config.headers(),
+        // { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      Swal.fire({
+        icon: "success",
+        title: "✅ สำเร็จ",
+        text: res.data.message,
+        timer: 4000,
+      });
+
+      window.location.reload();
+    } catch (err) {
+      const data = err?.response?.data;
+
+      // ✅ กรณีหัวตารางไม่ตรง
+      if (err?.response?.status === 400 && data?.details) {
+        const { expected, found, missingInExcel, extraInExcel } = data.details;
+
+        Swal.fire({
+          icon: "warning",
+          title: "หัวตารางไม่ตรง",
+          html: `
+          <div style="text-align:left">
+            <b>Expected (DB):</b><br/>
+            ${(expected || []).join(", ") || "-"}<br/><br/>
+
+            <b>Found (Excel):</b><br/>
+            ${(found || []).filter(Boolean).join(", ") || "-"}<br/><br/>
+
+            <b>Missing in Excel:</b><br/>
+            ${(missingInExcel || []).join(", ") || "-"}<br/><br/>
+
+            <b>Extra in Excel:</b><br/>
+            ${(extraInExcel || []).join(", ") || "-"}
+          </div>
+        `,
+        });
+        return;
+      }
+
+      Swal.fire("❌ ผิดพลาด", data?.message || "ไม่สามารถนำเข้าไฟล์ได้", "error");
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Template>
@@ -750,6 +815,17 @@ setMachineNumbers(filteredMachines);
                       BACK
                     </button>
                   </Link>
+
+                   <button
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#modalUploadExcel"
+                    className="btn btn-success ml-3"
+                  >
+                    <AiFillFileExcel style={{ marginRight: "5px" }} />
+                    UPLOAD EXCEL
+                  </button>
+
                   <input
                     type="text"
                     className="ml-2 text-center"
@@ -1081,6 +1157,30 @@ setMachineNumbers(filteredMachines);
           </button>
         </div>
       </Modal>
+
+      
+      <Modal id="modalUploadExcel" title="" modalSize="modal-lg">
+        <div className="col-12 mb-3 update-part-name">
+          <h3>UPLOAD MASTER EXCEL</h3>
+        </div>
+
+        <input
+          type="file"
+          accept=".xlsx, .xls"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="form-control mb-3 col-6"
+        />
+
+        <button
+          type="button"
+          className="btn btn-success mt-3 mb-5"
+          id="export-excel"
+          onClick={handleUpload}
+        >
+          🚀 IMPORT MASTER EXCEL TO DATABASE
+        </button>
+      </Modal>
+      
     </>
   );
 }

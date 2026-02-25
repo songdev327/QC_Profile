@@ -136,7 +136,13 @@ function RecordProduction() {
             "QC Line Status",
             "Projector Status",
             "Image Names", "Time Start",
-            "Name QC Check", "Mesering Type", "Setter AF By Type", "Time Check", "End Time", "End Date"
+            "Name QC Check", 
+            "Mesering Type", 
+            "Setter AF By Type", 
+            "AF By Type", 
+            "Time Check", 
+            "End Time", 
+            "End Date"
         ];
 
         if (!products || products.length === 0) {
@@ -240,6 +246,7 @@ function RecordProduction() {
                         "Name QC Check": "-", // ค่าว่าง
                         "Mesering Type": "-",
                         "Setter AF By Type": "-",
+                        "AF By Type": "-",
                         "Time Check": "-",
                         "End Time": item.qc_eqm_afterset_end_time || "-",
                         "End Date": item.barcode === "Pass"
@@ -337,6 +344,7 @@ function RecordProduction() {
                         "Name QC Check": img.nameeqm || "-",
                         "Mesering Type": img.mesering || "-",
                         "Setter AF By Type": img.nameafterset || "-",
+                        "AF By Type": img.afterset || "-",
                         "Time Check": img.timeeqm || "-",
                         "End Time": item.qc_eqm_afterset_end_time || "-",
                         "End Date": item.barcode === "Pass"

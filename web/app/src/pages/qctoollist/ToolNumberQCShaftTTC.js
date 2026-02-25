@@ -1174,16 +1174,16 @@ function ToolNumberQCShaftTTC() {
        };
  
        // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-       if (
-         product.contour !== "NG(Drawing)" &&
-         product.contour !== "Over target" &&
-         product.contour !== "Under target"
-       ) {
-         updateData.contour_ng_target_spec = null;
-         updateData.contour_ng_drawing_spec = null;
-         updateData.contour_over_target = null;
-         updateData.contour_under_target = null;
-       }
+      //  if (
+      //    product.contour !== "NG(Drawing)" &&
+      //    product.contour !== "Over target" &&
+      //    product.contour !== "Under target"
+      //  ) {
+      //    updateData.contour_ng_target_spec = null;
+      //    updateData.contour_ng_drawing_spec = null;
+      //    updateData.contour_over_target = null;
+      //    updateData.contour_under_target = null;
+      //  }
  
        console.log("🟢 Data ส่งไป backend:", updateData);
  
@@ -1290,16 +1290,16 @@ function ToolNumberQCShaftTTC() {
        };
  
        // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-       if (
-         product.sulfcom !== "NG(Drawing)" &&
-         product.sulfcom !== "Over target" &&
-         product.sulfcom !== "Under target"
-       ) {
-         updateDataSulfcom.sulfcom_ng_target_spec = null;
-         updateDataSulfcom.sulfcom_ng_drawing_spec = null;
-         updateDataSulfcom.sulfcom_over_target = null;
-         updateDataSulfcom.sulfcom_under_target = null;
-       }
+      //  if (
+      //    product.sulfcom !== "NG(Drawing)" &&
+      //    product.sulfcom !== "Over target" &&
+      //    product.sulfcom !== "Under target"
+      //  ) {
+      //    updateDataSulfcom.sulfcom_ng_target_spec = null;
+      //    updateDataSulfcom.sulfcom_ng_drawing_spec = null;
+      //    updateDataSulfcom.sulfcom_over_target = null;
+      //    updateDataSulfcom.sulfcom_under_target = null;
+      //  }
  
        console.log("🟢 Data ส่งไป backend:", updateDataSulfcom);
  
@@ -1405,16 +1405,16 @@ function ToolNumberQCShaftTTC() {
        };
  
        // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-       if (
-         product.roncom !== "NG(Drawing)" &&
-         product.roncom !== "Over target" &&
-         product.roncom !== "Under target"
-       ) {
-         updateDataRoncom.roncom_ng_target_spec = null;
-         updateDataRoncom.roncom_ng_drawing_spec = null;
-         updateDataRoncom.roncom_over_target = null;
-         updateDataRoncom.roncom_under_target = null;
-       }
+      //  if (
+      //    product.roncom !== "NG(Drawing)" &&
+      //    product.roncom !== "Over target" &&
+      //    product.roncom !== "Under target"
+      //  ) {
+      //    updateDataRoncom.roncom_ng_target_spec = null;
+      //    updateDataRoncom.roncom_ng_drawing_spec = null;
+      //    updateDataRoncom.roncom_over_target = null;
+      //    updateDataRoncom.roncom_under_target = null;
+      //  }
  
        console.log("🟢 Data ส่งไป backend:", updateDataRoncom);
  
@@ -1521,16 +1521,16 @@ function ToolNumberQCShaftTTC() {
        };
  
        // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-       if (
-         product.talysurf !== "NG(Drawing)" &&
-         product.talysurf !== "Over target" &&
-         product.talysurf !== "Under target"
-       ) {
-         updateDataTalysurf.talysurf_ng_target_spec = null;
-         updateDataTalysurf.talysurf_ng_drawing_spec = null;
-         updateDataTalysurf.talysurf_over_target = null;
-         updateDataTalysurf.talysurf_under_target = null;
-       }
+      //  if (
+      //    product.talysurf !== "NG(Drawing)" &&
+      //    product.talysurf !== "Over target" &&
+      //    product.talysurf !== "Under target"
+      //  ) {
+      //    updateDataTalysurf.talysurf_ng_target_spec = null;
+      //    updateDataTalysurf.talysurf_ng_drawing_spec = null;
+      //    updateDataTalysurf.talysurf_over_target = null;
+      //    updateDataTalysurf.talysurf_under_target = null;
+      //  }
  
        console.log("🟢 Data ส่งไป backend:", updateDataTalysurf);
  
@@ -1565,62 +1565,61 @@ function ToolNumberQCShaftTTC() {
 
 
   const handleSaveStatusToProduct = async (e) => {
-    e.preventDefault();
-
-    if (document.getElementById("statusForProduct").value === "") {
-      Swal.fire({
-        title: "กรุณาเลือก",
-        text: "Status เพื่อแจ้ง Production",
-        icon: "warning",
-      });
-
-      return;
-    }
-
-    const startEndEQM = {
-      qc_eqm_afterset_end_time: qc_eqm_afterset_end_time,
-    };
-
-    // Log payload before sending
-    console.log("Payload to be sent:", { ...product, ...startEndEQM });
-
-    try {
-      let url = config.api_path + "/product/insert";
-
-      if (product.id !== undefined) {
-        url = config.api_path + "/product/update";
-      }
-
-      const response = await axios.post(
-        url,
-        { ...product, ...startEndEQM },
-        config.headers()
-      );
-
-      // Log response from backend
-      console.log("Response from backend:", response);
-
-      if (response.data.message === "success") {
-        Swal.fire({
-          title: "บันทึกข้อมูล",
-          text: "บันทึก Status แล้ว",
-          icon: "success",
-          timer: 10000,
-        });
-        window.location.reload();
-        fetchData();
-      }
-    } catch (e) {
-      Swal.fire({
-        title: "error",
-        text: e.message,
-        icon: "error",
-      });
-
-      // Log any errors
-      console.error("Error:", e);
-    }
-  };
+   e.preventDefault();
+ 
+   if (document.getElementById("statusForProduct").value === "") {
+     Swal.fire({
+       title: "กรุณาเลือก",
+       text: "Status เพื่อแจ้ง Production",
+       icon: "warning",
+     });
+     return;
+   }
+ 
+   const startEndEQM = {
+     qc_eqm_afterset_end_time: qc_eqm_afterset_end_time,
+   };
+ 
+   // log data ก่อนส่ง
+   console.log("Payload to be sent:", { ...product, ...startEndEQM });
+ 
+   try {
+     // ⛔ ยกเลิก insert / update แบบเดิม
+     // let url = config.api_path + "/product/insert";
+     // if (product.id !== undefined) url = config.api_path + "/product/update";
+ 
+     // ✅ ใช้ update เสมอ
+     let url = config.api_path + "/product/updatePassEqm";
+ 
+     const response = await axios.put(
+       url,
+       { ...product, ...startEndEQM },
+       config.headers()
+     );
+ 
+     console.log("Response from backend:", response);
+ 
+     if (response.data.message === "success") {
+       Swal.fire({
+         title: "บันทึกข้อมูล",
+         text: "บันทึก Status แล้ว",
+         icon: "success",
+         timer: 10000,
+       });
+ 
+       window.location.reload();
+       fetchData();
+     }
+   } catch (e) {
+     Swal.fire({
+       title: "error",
+       text: e.message,
+       icon: "error",
+     });
+ 
+     console.error("Error:", e);
+   }
+ };
 
   const handleStartTimeEQM = async (e) => {
     e.preventDefault();
@@ -2750,7 +2749,9 @@ function ToolNumberQCShaftTTC() {
                           : "text-center"
                     }`}
                 >
-                  {item.contour} <br />
+                  {/* {item.contour} <br /> */}
+                  {item.contour ? item.contour : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.contour === "NG(Drawing)" && (
                     <>
@@ -2782,7 +2783,9 @@ function ToolNumberQCShaftTTC() {
                           : "text-center"
                     }`}
                 >
-                  {item.sulfcom} <br />
+                  {/* {item.sulfcom} <br /> */}
+                  {item.sulfcom ? item.sulfcom : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.sulfcom === "NG(Drawing)" && (
                     <>
@@ -2813,8 +2816,10 @@ function ToolNumberQCShaftTTC() {
                           : "text-center"
                     }`}
                 >
-                  {item.roncom} <br />
-                  {/* เงื่อนไขสำหรับ NG(Drawing) */}
+                  {/* {item.roncom} <br /> */}
+                  {item.roncom ? item.roncom : 'N/A'} <br />
+
+                  {/* เงื่อนไขสำหรับ NG(Drawing) */}                 
                   {item.roncom === "NG(Drawing)" && (
                     <>
                       {item.roncom_ng_target_spec} <br />
@@ -2845,7 +2850,9 @@ function ToolNumberQCShaftTTC() {
                           : "text-center"
                     }`}
                 >
-                  {item.talysurf} <br />
+                  {/* {item.talysurf} <br /> */}
+                  {item.talysurf ? item.talysurf : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.talysurf === "NG(Drawing)" && (
                     <>

@@ -46,17 +46,30 @@ const AdminDashboardSelect = () => {
     const [countdown, setCountdown] = useState(300); // 300 วินาที = 5 นาที
 
 
-    const getMonthOptions = () => {
+    const getMonthOptions = (yearsBack = 3) => {
         const now = new Date();
-        const year = now.getFullYear();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth() + 1;
+      
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        return Array.from({ length: 12 }, (_, i) => {
-            const month = String(i + 1).padStart(2, '0');
-            const monthLabel = monthNames[i]; // Jan, Feb, ...
-            return { value: `${year}-${month}`, label: `${monthLabel}-${year}` };
-        });
-    };
+                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      
+        const options = [];
+      
+        for (let y = currentYear; y >= currentYear - yearsBack; y--) {
+          const startMonth = (y === currentYear) ? currentMonth : 12;
+      
+          for (let m = startMonth; m >= 1; m--) {
+            const mm = String(m).padStart(2, "0");
+            options.push({
+              value: `${y}-${mm}`,
+              label: `${monthNames[m - 1]}-${y}`,
+            });
+          }
+        }
+      
+        return options;
+      };
 
     const getMonthName = (monthStr) => {
         const [year, month] = monthStr.split("-");
@@ -137,27 +150,28 @@ const AdminDashboardSelect = () => {
 
     const fetchMonthlyStats = async () => {
         try {
-            setLoading(prev => ({ ...prev, charts: true }));
-
-            const response = await axios.post(config.api_path + "/getMonthlyChangeData", { 
-                machineType: selectedTab,
-            }, config.headers());
-            const formatted = response.data.map(item => ({
-                name: getMonthName(item.month),
-                value: parseInt(item.count)
-            }));
-
-
-            setMonthlyData(formatted);
-            setLoading(prev => ({ ...prev, charts: false }));
-
-
+          setLoading(prev => ({ ...prev, charts: true }));
+      
+          const selectedYear = selectedMonth.split("-")[0];
+      
+          const response = await axios.post(config.api_path + "/getMonthlyChangeData", {
+            machineType: selectedTab,
+            year: selectedYear,
+          }, config.headers());
+      
+          const formatted = response.data.map(item => ({
+            name: getMonthName(item.month),
+            value: parseInt(item.count, 10),
+          }));
+      
+          setMonthlyData(formatted);
+          setLoading(prev => ({ ...prev, charts: false }));
         } catch (error) {
-            console.error("\u274C Error fetching chart data:", error);
-            setMonthlyData([]);
-            setLoading(prev => ({ ...prev, charts: false }));
+          console.error("❌ Error fetching chart data:", error);
+          setMonthlyData([]);
+          setLoading(prev => ({ ...prev, charts: false }));
         }
-    };
+      };
 
     const fetchSetterStats = async () => {
         try {

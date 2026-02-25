@@ -52,6 +52,7 @@ app.get("/getDataMCTNSearch", async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
+
 app.get("/getDataMCCHSearch", async (req, res) => {
   try {
     // กรองเฉพาะเครื่องจักรที่ขึ้นต้นด้วย 'CH'

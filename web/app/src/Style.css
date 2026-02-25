@@ -6,9 +6,26 @@
   box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
   
 }
+
+#page-app{
+  box-shadow: 1.0px 1.0px 3.0px 3.0px;
+}
+
+#tool-inspection-system{
+  width: 100%;
+  background: rgb(22, 161, 253);
+  padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+}
+
 #login-to-application{
   width: 50%;
-  background: yellow;
+  background: rgb(235, 235, 235);
   padding: 0.7rem 0.7rem 0.7rem 0.7rem;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 3px rgb(88, 87, 87);

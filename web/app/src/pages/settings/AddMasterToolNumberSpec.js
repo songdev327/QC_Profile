@@ -51,11 +51,14 @@ function AddMasterToolNumberSpec() {
 
   const [searchResult, setSearchResult] = useState(null); // สร้าง state เก็บผลลัพธ์การค้นหา
 
+  const [file, setFile] = useState(null);
+
   // ตัวเลือกที่จะแสดงใน Select
   const sectionOptions = [
     { value: "Production Check", label: "Production Check" },
     { value: "QC Line Check", label: "QC Line Check" },
     { value: "QC In process", label: "QC In process" },
+    { value: "QC Equipment Check", label: "QC Equipment Check" },
   ];
   const sectionOptionsDiv = [
     { value: "PCMB", label: "PCMB" },
@@ -270,8 +273,8 @@ function AddMasterToolNumberSpec() {
           await axios
             .put(
               config.api_path +
-                "/masterNumber/masterNumberSpecNumberToolupdate/" +
-                item.id,
+              "/masterNumber/masterNumberSpecNumberToolupdate/" +
+              item.id,
               {
                 Machine_Number: Machine_Number,
                 Partname_Model: Partname_Model,
@@ -351,8 +354,8 @@ function AddMasterToolNumberSpec() {
         try {
           await axios.delete(
             config.api_path +
-              "/masterNumber/masterNumberSpecNumberTooldelete/" +
-              item.id,
+            "/masterNumber/masterNumberSpecNumberTooldelete/" +
+            item.id,
             config.headers()
           );
           Swal.fire({
@@ -465,8 +468,7 @@ function AddMasterToolNumberSpec() {
         .sort((a, b) => a.sequence_number_spec - b.sequence_number_spec)
         .map(
           (item) =>
-            `${item.section_check || "Default Section"} , ${
-              item.spec_tool_no || "Default Spec"
+            `${item.section_check || "Default Section"} , ${item.spec_tool_no || "Default Spec"
             }`
         );
 
@@ -559,6 +561,68 @@ function AddMasterToolNumberSpec() {
     XLSX.writeFile(workbook, "Exported_Data.xlsx");
   };
 
+
+  const handleUpload = async (e) => {
+    e?.preventDefault();
+    if (!file) {
+      Swal.fire("⚠️ โปรดเลือกไฟล์ Excel ก่อน");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      Swal.fire({ title: "กำลังนำเข้า...", didOpen: () => Swal.showLoading() });
+
+      const res = await axios.post(
+        `${config.api_path}/upload-master-tool-spec-tbs`,
+        formData, config.headers(),
+        // { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      Swal.fire({
+        icon: "success",
+        title: "✅ สำเร็จ",
+        text: res.data.message,
+        timer: 4000,
+      });
+
+      window.location.reload();
+    } catch (err) {
+      const data = err?.response?.data;
+
+      // ✅ กรณีหัวตารางไม่ตรง
+      if (err?.response?.status === 400 && data?.details) {
+        const { expected, found, missingInExcel, extraInExcel } = data.details;
+
+        Swal.fire({
+          icon: "warning",
+          title: "หัวตารางไม่ตรง",
+          html: `
+          <div style="text-align:left">
+            <b>Expected (DB):</b><br/>
+            ${(expected || []).join(", ") || "-"}<br/><br/>
+
+            <b>Found (Excel):</b><br/>
+            ${(found || []).filter(Boolean).join(", ") || "-"}<br/><br/>
+
+            <b>Missing in Excel:</b><br/>
+            ${(missingInExcel || []).join(", ") || "-"}<br/><br/>
+
+            <b>Extra in Excel:</b><br/>
+            ${(extraInExcel || []).join(", ") || "-"}
+          </div>
+        `,
+        });
+        return;
+      }
+
+      Swal.fire("❌ ผิดพลาด", data?.message || "ไม่สามารถนำเข้าไฟล์ได้", "error");
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Template>
@@ -582,9 +646,9 @@ function AddMasterToolNumberSpec() {
                           options={
                             machines.length > 0
                               ? machines.map((item) => ({
-                                  value: item.machine_type,
-                                  label: item.machine_type,
-                                }))
+                                value: item.machine_type,
+                                label: item.machine_type,
+                              }))
                               : []
                           }
                           onChange={(selectedOption) =>
@@ -598,11 +662,11 @@ function AddMasterToolNumberSpec() {
                           id="modelName"
                           options={
                             model_noList.result &&
-                            model_noList.result.length > 0
+                              model_noList.result.length > 0
                               ? model_noList.result.map((item) => ({
-                                  value: item.Partname_Model,
-                                  label: item.Partname_Model,
-                                }))
+                                value: item.Partname_Model,
+                                label: item.Partname_Model,
+                              }))
                               : []
                           }
                           onChange={(selectedOption) =>
@@ -616,11 +680,11 @@ function AddMasterToolNumberSpec() {
                           id="modelName"
                           options={
                             process_noList.result &&
-                            process_noList.result.length > 0
+                              process_noList.result.length > 0
                               ? process_noList.result.map((item) => ({
-                                  value: item.process,
-                                  label: item.process,
-                                }))
+                                value: item.process,
+                                label: item.process,
+                              }))
                               : []
                           }
                           onChange={(selectedOption) =>
@@ -700,26 +764,26 @@ function AddMasterToolNumberSpec() {
                       </div>
                     </div>
                     <div className="col-12">
-                    <div className="input-group">
-                      <input
-                        type="number"
-                        onChange={(e) => setSequence_number_spec(e.target.value)}
-                        className="col-3 form-control mt-3"
-                        placeholder="No Spec........."
-                      />
+                      <div className="input-group">
+                        <input
+                          type="number"
+                          onChange={(e) => setSequence_number_spec(e.target.value)}
+                          className="col-3 form-control mt-3"
+                          placeholder="No Spec........."
+                        />
 
-                      <Select
-                        id="sectionCheck"
-                        options={sectionOptionsMesering}
-                        value={sectionOptionsMesering.find(
-                          (option) => option.value === mesering_type
-                        )} // กำหนดค่าเริ่มต้นให้กับ Select
-                        onChange={handleSectionChangeMesering} // ฟังก์ชันที่ถูกเรียกเมื่อมีการเลือกตัวเลือก
-                        className="col-3 mt-3"
-                        placeholder="Mesering......"
-                      />
+                        <Select
+                          id="sectionCheck"
+                          options={sectionOptionsMesering}
+                          value={sectionOptionsMesering.find(
+                            (option) => option.value === mesering_type
+                          )} // กำหนดค่าเริ่มต้นให้กับ Select
+                          onChange={handleSectionChangeMesering} // ฟังก์ชันที่ถูกเรียกเมื่อมีการเลือกตัวเลือก
+                          className="col-3 mt-3"
+                          placeholder="Mesering......"
+                        />
+                      </div>
                     </div>
-                  </div>
                   </div>
                 </div>
               </div>
@@ -733,12 +797,24 @@ function AddMasterToolNumberSpec() {
                     <AddIcon />
                     INSERT DATA
                   </button>
+
                   <Link to="/settings">
                     <button type="button" className="btn btn-danger ml-3">
                       <UndoIcon />
                       BACK
                     </button>
                   </Link>
+
+                  <button
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#modalUploadExcel"
+                    className="btn btn-success ml-3"
+                  >
+                    <AiFillFileExcel style={{ marginRight: "5px" }} />
+                    UPLOAD EXCEL
+                  </button>
+
                   <input
                     type="text"
                     className="ml-2 text-center"
@@ -760,9 +836,9 @@ function AddMasterToolNumberSpec() {
                   options={
                     machines.length > 0 // ตรวจสอบว่า machines มีค่าและไม่ว่าง
                       ? machines.map((item) => ({
-                          value: item.machine_type, // ใช้ Machine_type
-                          label: item.machine_type, // ใช้ Machine_type ใน label
-                        }))
+                        value: item.machine_type, // ใช้ Machine_type
+                        label: item.machine_type, // ใช้ Machine_type ใน label
+                      }))
                       : []
                   }
                   onChange={(selectedOption) =>
@@ -776,9 +852,9 @@ function AddMasterToolNumberSpec() {
                   options={
                     tool_noSearch.result && tool_noSearch.result.length > 0 // ตรวจสอบว่า machinesSearch.result มีค่าและไม่ว่าง
                       ? tool_noSearch.result.map((item) => ({
-                          value: item.tool_no, // เปลี่ยนให้ใช้ tool_no แทน
-                          label: item.tool_no, // ใช้ tool_no ใน label
-                        }))
+                        value: item.tool_no, // เปลี่ยนให้ใช้ tool_no แทน
+                        label: item.tool_no, // ใช้ tool_no ใน label
+                      }))
                       : []
                   }
                   onChange={(selectedOption) =>
@@ -792,9 +868,9 @@ function AddMasterToolNumberSpec() {
                   options={
                     model_noSearch.result && model_noSearch.result.length > 0 // ตรวจสอบว่า machinesSearch.result มีค่าและไม่ว่าง
                       ? model_noSearch.result.map((item) => ({
-                          value: item.Partname_Model, // เปลี่ยนให้ใช้ tool_no แทน
-                          label: item.Partname_Model, // ใช้ tool_no ใน label
-                        }))
+                        value: item.Partname_Model, // เปลี่ยนให้ใช้ tool_no แทน
+                        label: item.Partname_Model, // ใช้ tool_no ใน label
+                      }))
                       : []
                   }
                   onChange={(selectedOption) =>
@@ -886,8 +962,8 @@ function AddMasterToolNumberSpec() {
                     <td className="text-center">
                       {item.createdAt
                         ? new Date(item.createdAt).toLocaleString("en-GB", {
-                            hour12: false,
-                          })
+                          hour12: false,
+                        })
                         : "-"}
                     </td>
                     <td className="text-center">{item.Machine_Number}</td>
@@ -1070,6 +1146,29 @@ function AddMasterToolNumberSpec() {
           </button>
         </div>
       </Modal>
+
+      <Modal id="modalUploadExcel" title="" modalSize="modal-lg">
+        <div className="col-12 mb-3 update-part-name">
+          <h3>UPLOAD MASTER EXCEL</h3>
+        </div>
+
+        <input
+          type="file"
+          accept=".xlsx, .xls"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="form-control mb-3 col-6"
+        />
+
+        <button
+          type="button"
+          className="btn btn-success mt-3 mb-5"
+          id="export-excel"
+          onClick={handleUpload}
+        >
+          🚀 IMPORT MASTER EXCEL TO DATABASE
+        </button>
+      </Modal>
+
     </>
   );
 }

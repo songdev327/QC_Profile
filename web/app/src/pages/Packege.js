@@ -93,8 +93,8 @@ function Package() {
             <div className="card card-outline card-success mt-5">
               <div className="card-header">
                 <div className="container mt-2">
-                  <div className="h2 mt-3" id="qc-equipment-system">
-                    QC Equipment System
+                  <div className="h2 mt-3" id="tool-inspection-system">
+                    TOOL INSPECTION SYSTEM
                   </div>
                   <div className="h4 ml-3" id="login-to-application">
                     Login To Application

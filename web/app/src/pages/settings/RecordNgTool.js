@@ -130,7 +130,11 @@ function RecordNgTool() {
         // หัวคอลัมน์ให้ตรงกับตาราง
         const headers = [
             "Barcode", "Date", "Name", "Shift", "Machine", "Model", "Process", "Tool No.", "Case","Remark",
-            "AF1", "Setter After1", "AF2", "Setter After2", "AF3", "Setter After3", "AF4", "Setter After4", "AF5", "Setter After5",
+            "AF1", "Setter After1", 
+            "AF2", "Setter After2", 
+            "AF3", "Setter After3", 
+            "AF4", "Setter After4", 
+            "AF5", "Setter After5",
             "contour_ng_target_spec", "contour_ng_drawing_spec", "contour_over_target", "contour_under_target",
             "sulfcom_ng_target_spec", "sulfcom_ng_drawing_spec", "sulfcom_over_target", "sulfcom_under_target",
             "roncom_ng_target_spec", "roncom_ng_drawing_spec", "roncom_over_target", "roncom_under_target",
@@ -154,12 +158,16 @@ function RecordNgTool() {
 
             AF1: item.afterset ?? "-",
             "Setter After1": item.nameafterset ?? "-",
+
             AF2: item.afterset2 ?? "-",
             "Setter After2": item.nameafterset2 ?? "-",
+
             AF3: item.afterset3 ?? "-",
             "Setter After3": item.nameafterset3 ?? "-",
+
             AF4: item.afterset4 ?? "-",
             "Setter After4": item.nameafterset4 ?? "-",
+
             AF5: item.afterset5 ?? "-",
             "Setter After5": item.nameafterset5 ?? "-",
 

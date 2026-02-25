@@ -966,49 +966,49 @@ function ToolNumberSearch(props) {
 
 
   const handleSaveCancelRecord = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const status = document.getElementById("statusForProduct")?.value;
-  const remark = document.getElementById("remarkForProduct")?.value;
+    const status = document.getElementById("statusForProduct")?.value;
+    const remark = document.getElementById("remarkForProduct")?.value;
 
-  if (!status || !remark) {
-    Swal.fire({
-      title: "กรุณากรอกข้อมูล",
-      text: "กรุณากรอกข้อมูล Cancel และ Remark",
-      icon: "warning",
-    });
-    return;
-  }
-
-  try {
-    if (!product.id) {
+    if (!status || !remark) {
       Swal.fire({
-        title: "Error",
-        text: "ไม่พบ ID ของรายการ กรุณารีเฟรชหน้า",
-        icon: "error",
+        title: "กรุณากรอกข้อมูล",
+        text: "กรุณากรอกข้อมูล Cancel และ Remark",
+        icon: "warning",
       });
       return;
     }
 
-    const url = `${config.api_path}/product/updateCancel/${product.id}`;
-    const res = await axios.put(url, product, config.headers());
+    try {
+      if (!product.id) {
+        Swal.fire({
+          title: "Error",
+          text: "ไม่พบ ID ของรายการ กรุณารีเฟรชหน้า",
+          icon: "error",
+        });
+        return;
+      }
 
-    if (res.data.message === "success") {
+      const url = `${config.api_path}/product/updateCancel/${product.id}`;
+      const res = await axios.put(url, product, config.headers());
+
+      if (res.data.message === "success") {
+        Swal.fire({
+          title: "บันทึกข้อมูล",
+          text: "บันทึก Cancel & Remark แล้ว",
+          icon: "success",
+        });
+        window.location.reload();
+      }
+    } catch (e) {
       Swal.fire({
-        title: "บันทึกข้อมูล",
-        text: "บันทึก Cancel & Remark แล้ว",
-        icon: "success",
+        title: "error",
+        text: e.message,
+        icon: "error",
       });
-      window.location.reload();
     }
-  } catch (e) {
-    Swal.fire({
-      title: "error",
-      text: e.message,
-      icon: "error",
-    });
-  }
-};
+  };
 
   const handleSaveNewPartSetUp = async (e) => {
     e.preventDefault();
@@ -1129,6 +1129,80 @@ function ToolNumberSearch(props) {
     });
     setFilteredProducts(filtered);
   }, [selectedMCType, products]);
+
+  //------- Start Add web socket 20-10-25 -------------------------------------------------
+
+  useEffect(() => {
+    const socket = config.socket;
+
+    socket.on("productUpdated", (updatedProduct) => {
+      console.log("🟡 Product updated via socket:", updatedProduct);
+
+      // ✅ อัปเดต state ตาม id ถ้าคุณใช้ list
+      setProducts((prev) =>
+        prev.map((item) => (item.id === updatedProduct.id ? updatedProduct : item))
+      );
+    });
+
+    return () => {
+      socket.off("productUpdated");
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const socket = config.socket;
+
+    // 🔌 Event การเชื่อมต่อ
+    socket.on("connect", () => console.log("✅ Connected to socket:", socket.id));
+    socket.on("disconnect", () => console.log("❌ Disconnected from socket"));
+
+    // 🆕 รับข้อมูลเมื่อมีการเพิ่มรายการใหม่
+    socket.on("productAdded", (newProduct) => {
+      // console.log("🆕 New product:", newProduct);
+      setProducts((prev) => [newProduct, ...prev]);
+      // setTotalItems((prev) => prev + 1);
+
+      if (
+        selectedMCType === "" ||
+        newProduct.machine.startsWith(selectedMCType)
+      ) {
+        setFilteredProducts((prev) => [newProduct, ...prev]);
+      }
+    });
+
+    // 🔄 รับข้อมูลเมื่อมีการแก้ไขรายการ (Contour, Sulfcom)
+    socket.on("productUpdated", (updatedProduct) => {
+      // console.log("🔄 Product updated:", updatedProduct);
+      setProducts((prev) =>
+        prev.map((item) =>
+          item.id === updatedProduct.id ? updatedProduct : item
+        )
+      );
+      if (
+        selectedMCType === "" ||
+        updatedProduct.machine.startsWith(selectedMCType)
+      ) {
+        setFilteredProducts((prev) =>
+          prev.map((item) =>
+            item.id === updatedProduct.id ? updatedProduct : item
+          )
+        );
+      }
+    });
+
+    return () => {
+      // ✅ ล้าง event ทั้งหมดตอน unmount
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("productAdded");
+      socket.off("productUpdated");
+    };
+  }, [selectedMCType]);
+
+
+  //------- End Add web socket 20-10-25  ------------------------------------------------------------
+
 
   //------------------------- Auto Tool -----------------------------------------------------------------------
 
@@ -2523,7 +2597,7 @@ function ToolNumberSearch(props) {
                             }),
                             placeholder: (provided) => ({
                               ...provided,
-                             color: 'rgba(27, 61, 255, 1)',
+                              color: 'rgba(27, 61, 255, 1)',
                             }),
                           }}
                         />
@@ -2792,7 +2866,10 @@ function ToolNumberSearch(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.contour} <br />
+                  {/* {item.contour} <br /> */}
+                  {item.contour ? item.contour : 'N/A'} <br />
+
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.contour === "NG(Drawing)" && (
                     <>
@@ -2824,7 +2901,9 @@ function ToolNumberSearch(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.sulfcom} <br />
+                  {/* {item.sulfcom} <br /> */}
+                  {item.sulfcom ? item.sulfcom : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.sulfcom === "NG(Drawing)" && (
                     <>
@@ -2855,7 +2934,10 @@ function ToolNumberSearch(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.roncom} <br />
+                  {/* {item.roncom} <br /> */}
+                  {item.roncom ? item.roncom : 'N/A'} <br />
+
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.roncom === "NG(Drawing)" && (
                     <>
@@ -2887,7 +2969,10 @@ function ToolNumberSearch(props) {
                           : "text-center"
                     }`}
                 >
-                  {item.talysurf} <br />
+                  {/* {item.talysurf} <br /> */}
+                  {item.talysurf ? item.talysurf : 'N/A'} <br />
+
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.talysurf === "NG(Drawing)" && (
                     <>
@@ -3503,7 +3588,7 @@ function ToolNumberSearch(props) {
             </button>
           </div>
 
-        {/*------------------------------ Start Add Linux ------------------------------*/}
+          {/*------------------------------ Start Add Linux ------------------------------*/}
           <div className="row">
             <div className="mt-3 col-3">
               <input
@@ -3512,7 +3597,7 @@ function ToolNumberSearch(props) {
                   setProduct({ ...product, ip_address: e.target.value })
                 }
                 className="form-control"
-                style={{ backgroundColor:"white" , color:"white", border:"white"}}
+                style={{ backgroundColor: "white", color: "white", border: "white" }}
               />
             </div>
             <div className="mt-3 col-1">
@@ -3522,18 +3607,18 @@ function ToolNumberSearch(props) {
                   setProduct({ ...product, system_no: e.target.value })
                 }
                 className="form-control"
-                style={{ backgroundColor:"white" , color:"white", border:"white"}}
+                style={{ backgroundColor: "white", color: "white", border: "white" }}
               />
             </div>
             <div className="mt-3 col-1">
               <input
-                
+
                 value={address_type}
                 onChange={(e) =>
                   setProduct({ ...product, address_type: e.target.value })
                 }
                 className="form-control"
-                style={{ backgroundColor:"white" , color:"white", border:"white"}}
+                style={{ backgroundColor: "white", color: "white", border: "white" }}
               />
             </div>
             <div className="mt-3 col-2">
@@ -3544,7 +3629,7 @@ function ToolNumberSearch(props) {
                   setProduct({ ...product, address_no: e.target.value })
                 }
                 className="form-control"
-                style={{ backgroundColor:"white" , color:"white", border:"white"}}
+                style={{ backgroundColor: "white", color: "white", border: "white" }}
               />
             </div>
           </div>
@@ -4120,7 +4205,7 @@ function ToolNumberSearch(props) {
                 </div>
 
                 <div className="d-flex">
-                 <input
+                  <input
                     onChange={(e) =>
                       setProduct({ ...product, barcode: e.target.value })
                     }

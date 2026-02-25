@@ -6,7 +6,7 @@ import axios from "axios";
 import { format } from "date-fns";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
+// import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
@@ -1148,17 +1148,17 @@ function ToolNumberQC() {
         contour_under_target: contourUnderTarget || null,
       };
 
-      // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-      if (
-        product.contour !== "NG(Drawing)" &&
-        product.contour !== "Over target" &&
-        product.contour !== "Under target"
-      ) {
-        updateData.contour_ng_target_spec = null;
-        updateData.contour_ng_drawing_spec = null;
-        updateData.contour_over_target = null;
-        updateData.contour_under_target = null;
-      }
+      // // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
+      // if (
+      //   product.contour !== "NG(Drawing)" &&
+      //   product.contour !== "Over target" &&
+      //   product.contour !== "Under target"
+      // ) {
+      //   updateData.contour_ng_target_spec = null;
+      //   updateData.contour_ng_drawing_spec = null;
+      //   updateData.contour_over_target = null;
+      //   updateData.contour_under_target = null;
+      // }
 
       console.log("🟢 Data ส่งไป backend:", updateData);
 
@@ -1264,17 +1264,17 @@ function ToolNumberQC() {
         sulfcom_under_target: sulfcomUnderTarget || null,
       };
 
-      // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-      if (
-        product.sulfcom !== "NG(Drawing)" &&
-        product.sulfcom !== "Over target" &&
-        product.sulfcom !== "Under target"
-      ) {
-        updateDataSulfcom.sulfcom_ng_target_spec = null;
-        updateDataSulfcom.sulfcom_ng_drawing_spec = null;
-        updateDataSulfcom.sulfcom_over_target = null;
-        updateDataSulfcom.sulfcom_under_target = null;
-      }
+      // // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
+      // if (
+      //   product.sulfcom !== "NG(Drawing)" &&
+      //   product.sulfcom !== "Over target" &&
+      //   product.sulfcom !== "Under target"
+      // ) {
+      //   updateDataSulfcom.sulfcom_ng_target_spec = null;
+      //   updateDataSulfcom.sulfcom_ng_drawing_spec = null;
+      //   updateDataSulfcom.sulfcom_over_target = null;
+      //   updateDataSulfcom.sulfcom_under_target = null;
+      // }
 
       console.log("🟢 Data ส่งไป backend:", updateDataSulfcom);
 
@@ -1379,17 +1379,17 @@ function ToolNumberQC() {
         roncom_under_target: roncomUnderTarget || null,
       };
 
-      // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-      if (
-        product.roncom !== "NG(Drawing)" &&
-        product.roncom !== "Over target" &&
-        product.roncom !== "Under target"
-      ) {
-        updateDataRoncom.roncom_ng_target_spec = null;
-        updateDataRoncom.roncom_ng_drawing_spec = null;
-        updateDataRoncom.roncom_over_target = null;
-        updateDataRoncom.roncom_under_target = null;
-      }
+      // // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
+      // if (
+      //   product.roncom !== "NG(Drawing)" &&
+      //   product.roncom !== "Over target" &&
+      //   product.roncom !== "Under target"
+      // ) {
+      //   updateDataRoncom.roncom_ng_target_spec = null;
+      //   updateDataRoncom.roncom_ng_drawing_spec = null;
+      //   updateDataRoncom.roncom_over_target = null;
+      //   updateDataRoncom.roncom_under_target = null;
+      // }
 
       console.log("🟢 Data ส่งไป backend:", updateDataRoncom);
 
@@ -1495,17 +1495,17 @@ function ToolNumberQC() {
         talysurf_under_target: talysurfUnderTarget || null,
       };
 
-      // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
-      if (
-        product.talysurf !== "NG(Drawing)" &&
-        product.talysurf !== "Over target" &&
-        product.talysurf !== "Under target"
-      ) {
-        updateDataTalysurf.talysurf_ng_target_spec = null;
-        updateDataTalysurf.talysurf_ng_drawing_spec = null;
-        updateDataTalysurf.talysurf_over_target = null;
-        updateDataTalysurf.talysurf_under_target = null;
-      }
+      // // ถ้า contour ไม่ใช่ NG/Over/Under → ล้างค่า
+      // if (
+      //   product.talysurf !== "NG(Drawing)" &&
+      //   product.talysurf !== "Over target" &&
+      //   product.talysurf !== "Under target"
+      // ) {
+      //   updateDataTalysurf.talysurf_ng_target_spec = null;
+      //   updateDataTalysurf.talysurf_ng_drawing_spec = null;
+      //   updateDataTalysurf.talysurf_over_target = null;
+      //   updateDataTalysurf.talysurf_under_target = null;
+      // }
 
       console.log("🟢 Data ส่งไป backend:", updateDataTalysurf);
 
@@ -1560,12 +1560,18 @@ function ToolNumberQC() {
 
     try {
       // Save product status to backend
-      let url = config.api_path + '/product/insert';
-      if (product.id !== undefined) {
-        url = config.api_path + '/product/update';
-      }
+      // let url = config.api_path + '/product/insert';
+      // if (product.id !== undefined) {
+      //   url = config.api_path + '/product/update';
+      // }
 
-      const response = await axios.post(url, { ...product, ...startEndEQM }, config.headers());
+      let url = config.api_path + "/product/updatePassEqm";
+
+      const response = await axios.put(
+        url, 
+        { ...product, ...startEndEQM }, 
+        config.headers()
+      );
 
       // Log response from backend
       console.log('Response from backend:', response);
@@ -2778,7 +2784,9 @@ function ToolNumberQC() {
                           : "text-center"
                     }`}
                 >
-                  {item.contour} <br />
+                  {/* {item.contour} <br /> */}
+                  {item.contour ? item.contour : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.contour === "NG(Drawing)" && (
                     <>
@@ -2810,7 +2818,9 @@ function ToolNumberQC() {
                           : "text-center"
                     }`}
                 >
-                  {item.sulfcom} <br />
+                  {/* {item.sulfcom} <br /> */}
+                  {item.sulfcom ? item.sulfcom : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.sulfcom === "NG(Drawing)" && (
                     <>
@@ -2841,7 +2851,9 @@ function ToolNumberQC() {
                           : "text-center"
                     }`}
                 >
-                  {item.roncom} <br />
+                  {/* {item.roncom} <br /> */}
+                  {item.roncom ? item.roncom : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.roncom === "NG(Drawing)" && (
                     <>
@@ -2873,7 +2885,9 @@ function ToolNumberQC() {
                           : "text-center"
                     }`}
                 >
-                  {item.talysurf} <br />
+                  {/* {item.talysurf} <br /> */}
+                  {item.talysurf ? item.talysurf : 'N/A'} <br />
+
                   {/* เงื่อนไขสำหรับ NG(Drawing) */}
                   {item.talysurf === "NG(Drawing)" && (
                     <>
